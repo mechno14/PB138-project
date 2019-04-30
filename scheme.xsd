@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+
+<xsd:schema version="1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+
+    <xsd:element name="videoLibrary" >
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="categories" type="categoriesList" />
+            </xsd:sequence>
+        </xsd:complexType>
+        <xsd:key name="mediumIdKey">
+            <xsd:selector xpath="categories/category/medium" />
+            <xsd:field xpath="@id" />
+        </xsd:key>
+    </xsd:element>
+
+    <xsd:complexType name="categoriesList">
+        <xsd:sequence>
+            <xsd:element name="category" type="categoryType" maxOccurs="unbounded" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="categoryType">
+        <xsd:sequence>
+            <xsd:element name="medium" type="mediumType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="nonEmptyString" use="required"/>
+        <xsd:attribute name="price" type="xsd:float" use="required"/>
+    </xsd:complexType>
+
+    <xsd:simpleType name="nonEmptyString">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="mediumType">
+        <xsd:all>
+            <xsd:element name="mediumType" type="typeEnum" />
+            <xsd:element name="name" type="nonEmptyString" /> <!-- mozno specialiovat aby neobsahovalo divne znaky -->
+            <xsd:element name="length" type="lengthType" />
+            <xsd:element name="actors" type="listOfActors" minOccurs="0"/>
+            <xsd:element name="status" type="statusEnum" />
+            <xsd:element name="genres" type="genresType" minOccurs="0"/>
+            <xsd:element name="releaseYear" type="xsd:nonNegativeInteger" />
+        </xsd:all>
+        <xsd:attribute name="id" type="xsd:integer" use="required" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="typeEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="VHS" />
+            <xsd:enumeration value="DVD" />
+            <xsd:enumeration value="USB" />
+            <xsd:enumeration value="memory card" />
+            <xsd:enumeration value="other" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="lengthType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([1-9][0-9]*)|unknown"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="listOfActors">
+        <xsd:sequence>
+            <xsd:element name="actor" type="nameString" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="nameString">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[\p{Lu}][\p{Ll}]+(\s[\p{Lu}][\p{Ll}]+)(\s[\p{Lu}][\p{Ll}]+)*"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="statusEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="rented" />
+            <xsd:enumeration value="available" />
+            <xsd:enumeration value="lost" />
+            <xsd:enumeration value="broken" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="genresType">
+        <xsd:sequence>
+            <xsd:element name="genre" type="nonEmptyString" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+
+</xsd:schema>
