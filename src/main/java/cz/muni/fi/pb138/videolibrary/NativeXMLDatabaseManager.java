@@ -1,5 +1,6 @@
 package cz.muni.fi.pb138.videolibrary;
 
+import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import org.exist.xmldb.EXistResource;
@@ -75,25 +76,25 @@ public class NativeXMLDatabaseManager {
         return Integer.toString(counter);
     }
 
-    public void createCategory(String category) {
+    public void createCategory(Category category) {
         try {
-            CompiledExpression compiledExpression = xQueryService.compile("update insert <category name='" + category + "' /> into doc('database.xml')/videoLibrary/categories");
+            CompiledExpression compiledExpression = xQueryService.compile("update insert <category name='" + category.getName() + "' /> into doc('database.xml')/videoLibrary/categories");
             xQueryService.execute(compiledExpression);
         } catch (XMLDBException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void deleteCategory(String category) {
+    public void deleteCategory(Category category) {
         try {
-            CompiledExpression compiledExpression = xQueryService.compile("update delete doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']");
+            CompiledExpression compiledExpression = xQueryService.compile("update delete doc('database.xml')/videoLibrary/categories/category[@name='" + category.getName() + "']");
             xQueryService.execute(compiledExpression);
         } catch (XMLDBException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void addMedium(Medium medium) {
+    public void createMedium(Medium medium) {
         String mediumQuery = "<medium id='" + medium.getId() + "'>" +
                 "<mediumType>" + medium.getMediumType().toString() + "</mediumType>" +
                 "<name>" + medium.getName() + "</name>" +
@@ -134,10 +135,11 @@ public class NativeXMLDatabaseManager {
         }
     }
 
-    public void deleteMediumFromCategory(String mediumId, String category) {
+    public void deleteMedium(Medium medium) {
         try {
             CompiledExpression compiledExpression = xQueryService.compile(
-                    "update delete doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']/medium[@id='" + mediumId + "']");
+                    "update delete doc('database.xml')/videoLibrary/categories/category[@name='"
+                            + medium.getCategory().getName() + "']/medium[@id='" + medium.getId().toString() + "']");
             xQueryService.execute(compiledExpression);
         } catch (XMLDBException ex) {
             ex.printStackTrace();
@@ -176,18 +178,20 @@ public class NativeXMLDatabaseManager {
                         xe.printStackTrace();
                     }
                 }
-            }}
-        catch (XMLDBException ex) {ex.printStackTrace();}
+            }
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
+        }
         return medium;
     }
 
-    public void moveMediumToDifferentCategory(Medium medium, String category) {
+    public void moveMediumToDifferentCategory(Medium medium) {
         String mediumQuery = findMediumById(medium.getId().toString());
         deleteMedium(medium.getId().toString());
-        addMediumToCategory(mediumQuery, category);
+        addMediumToCategory(mediumQuery, medium.getCategory().getName());
     }
 
-    public List<String> findAllCategories() {
+    public Set<Category> findAllCategories() {
         String xpath =
                 "for $category in doc('database.xml')/videoLibrary/categories/category " +
                         "return data($category/@name)";
@@ -213,7 +217,15 @@ public class NativeXMLDatabaseManager {
         } catch (XMLDBException ex) {
             ex.printStackTrace();
         }
-        return categories;
+
+        Set<Category> cats = new HashSet<>();
+
+        for (String cat :
+                categories) {
+            cats.add(new Category(cat));
+        }
+
+        return cats;
     }
 
     public void deleteMedium(String mediumId) {
