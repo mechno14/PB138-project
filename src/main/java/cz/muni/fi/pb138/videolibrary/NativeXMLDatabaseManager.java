@@ -25,7 +25,6 @@ public class NativeXMLDatabaseManager {
 
 
     public NativeXMLDatabaseManager() throws Exception {
-
         Class cl = Class.forName(DRIVER);
         Database database = (Database) cl.newInstance();
         database.setProperty("create-database", "true");
@@ -39,32 +38,35 @@ public class NativeXMLDatabaseManager {
         collection.close();
     }
 
-    public String getFirstFreeId() throws XMLDBException
-    {
+    public String getFirstFreeId() {
         String xpath =
-                        "for $category in doc('database.xml')/videoLibrary/categories/category " +
+                "for $category in doc('database.xml')/videoLibrary/categories/category " +
                         "for $medium in $category/medium " +
-                "return number($medium/@id)";
-        CompiledExpression compiledExpression = xQueryService.compile(xpath);
-        ResourceSet result = xQueryService.execute(compiledExpression);
-        ResourceIterator i = result.getIterator();
+                        "return number($medium/@id)";
         Set<Integer> ids = new HashSet<>();
-        Resource res = null;
-        while (i.hasMoreResources()) {
-            try {
-                res = i.nextResource();
-                ids.add(Integer.valueOf((String) res.getContent()));
-            } finally {
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile(xpath);
+            ResourceSet result = xQueryService.execute(compiledExpression);
+            ResourceIterator i = result.getIterator();
+            Resource res = null;
+            while (i.hasMoreResources()) {
                 try {
-                    ((EXistResource) res).freeResources();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
+                    res = i.nextResource();
+                    ids.add(Integer.valueOf((String) res.getContent()));
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
                 }
             }
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
         }
         int counter = 1;
-        for (Integer id:
-             ids) {
+        for (Integer id :
+                ids) {
             if (id != counter) {
                 return Integer.toString(counter);
             }
@@ -73,160 +75,182 @@ public class NativeXMLDatabaseManager {
         return Integer.toString(counter);
     }
 
-    public void createCategory(String category) throws XMLDBException {
-        CompiledExpression compiledExpression = xQueryService.compile("update insert <category name='" + category + "' /> into doc('database.xml')/videoLibrary/categories");
-        xQueryService.execute(compiledExpression);
+    public void createCategory(String category) {
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile("update insert <category name='" + category + "' /> into doc('database.xml')/videoLibrary/categories");
+            xQueryService.execute(compiledExpression);
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public void deleteCategory(String category) throws XMLDBException {
-        CompiledExpression compiledExpression = xQueryService.compile("update delete doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']");
-        xQueryService.execute(compiledExpression);
+    public void deleteCategory(String category) {
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile("update delete doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']");
+            xQueryService.execute(compiledExpression);
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public void addMedium(Medium medium) throws XMLDBException {
-        String mediumQuery = "<medium id='"+ medium.getId() +"'>" +
-                "<mediumType>"+ medium.getMediumType().toString() +"</mediumType>"+
-                "<name>"+medium.getName()+"</name>"+
-                "<length>"+Integer.valueOf(medium.getLength())+"</length>"+
+    public void addMedium(Medium medium) {
+        String mediumQuery = "<medium id='" + medium.getId() + "'>" +
+                "<mediumType>" + medium.getMediumType().toString() + "</mediumType>" +
+                "<name>" + medium.getName() + "</name>" +
+                "<length>" + Integer.valueOf(medium.getLength()) + "</length>" +
                 "<actors>";
 
-        for (String actor:
-             medium.getActors()) {
-            mediumQuery += "<actor>"+actor+"</actor>";
+        for (String actor :
+                medium.getActors()) {
+            mediumQuery += "<actor>" + actor + "</actor>";
         }
 
         mediumQuery += "</actors><genres>";
 
-        for (Genre genre:
-        medium.getGenres()) {
-            mediumQuery += "<genre>"+ genre.toString() +"</genre>";
+        for (Genre genre :
+                medium.getGenres()) {
+            mediumQuery += "<genre>" + genre.toString() + "</genre>";
         }
 
         mediumQuery += "</genres><releaseYear>" + medium.getReleaseYear().toString()
                 + "</releaseYear></medium>";
 
-        CompiledExpression compiledExpression = xQueryService.compile("update insert " + mediumQuery +
-                " into doc('database.xml')/videoLibrary/categories/category[@name='" + medium.getCategory() + "']");
-        xQueryService.execute(compiledExpression);
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile("update insert " + mediumQuery +
+                    " into doc('database.xml')/videoLibrary/categories/category[@name='" + medium.getCategory() + "']");
+            xQueryService.execute(compiledExpression);
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public void addMediumToCategory(String mediumQuery, String category) throws XMLDBException {
-        CompiledExpression compiledExpression = xQueryService.compile("update insert " + mediumQuery +
-                " into doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']");
-        xQueryService.execute(compiledExpression);
+    public void addMediumToCategory(String mediumQuery, String category) {
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile("update insert " + mediumQuery +
+                    " into doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']");
+            xQueryService.execute(compiledExpression);
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public void deleteMediumFromCategory(String mediumId, String category) throws XMLDBException {
-        CompiledExpression compiledExpression = xQueryService.compile(
-                "update delete doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']/medium[@id='" + mediumId + "']");
-        xQueryService.execute(compiledExpression);
+    public void deleteMediumFromCategory(String mediumId, String category) {
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile(
+                    "update delete doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']/medium[@id='" + mediumId + "']");
+            xQueryService.execute(compiledExpression);
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public String findMediumById(String mediumId) throws XMLDBException {
+    public String findMediumById(String mediumId) {
         String xpath =
                 "for $category in doc('database.xml')/videoLibrary/categories/category " +
-                        "return data($category/medium[id='"+mediumId+"'])";
-        CompiledExpression compiledExpression = xQueryService.compile(xpath);
-        ResourceSet result = xQueryService.execute(compiledExpression);
-        ResourceIterator i = result.getIterator();
+                        "return data($category/medium[id='" + mediumId + "'])";
+        return findMedium(xpath);
+    }
+
+    public String findMediumByName(String mediumName) {
+        String xpath =
+                "for $category in doc('database.xml')/videoLibrary/categories/category " +
+                        "return data($category/medium/name/text()='" + mediumName + "')";
+        return findMedium(xpath);
+    }
+
+    private String findMedium(String xpathToMedium) {
         String medium = "";
-        Resource res = null;
-        if (i.hasMoreResources()) {
-            try {
-                res = i.nextResource();
-                medium = (String)res.getContent();
-            } finally {
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile(xpathToMedium);
+            ResourceSet result = xQueryService.execute(compiledExpression);
+            ResourceIterator i = result.getIterator();
+            Resource res = null;
+            if (i.hasMoreResources()) {
                 try {
-                    ((EXistResource) res).freeResources();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
+                    res = i.nextResource();
+                    medium = (String) res.getContent();
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
                 }
-            }
-        }
+            }}
+        catch (XMLDBException ex) {ex.printStackTrace();}
         return medium;
     }
 
-    public String findMediumByName(String mediumName) throws XMLDBException {
-        String xpath =
-                "for $category in doc('database.xml')/videoLibrary/categories/category " +
-                        "return data($category/medium/name/text()='"+mediumName+"')";
-        CompiledExpression compiledExpression = xQueryService.compile(xpath);
-        ResourceSet result = xQueryService.execute(compiledExpression);
-        ResourceIterator i = result.getIterator();
-        String medium = "";
-        Resource res = null;
-        if (i.hasMoreResources()) {
-            try {
-                res = i.nextResource();
-                medium = (String)res.getContent();
-            } finally {
-                try {
-                    ((EXistResource) res).freeResources();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
-                }
-            }
-        }
-        return medium;
-    }
-
-    public void moveMediumToDifferentCategory(Medium medium, String category) throws XMLDBException {
+    public void moveMediumToDifferentCategory(Medium medium, String category) {
         String mediumQuery = findMediumById(medium.getId().toString());
         deleteMedium(medium.getId().toString());
         addMediumToCategory(mediumQuery, category);
     }
 
-    public List<String> findAllCategories() throws XMLDBException {
+    public List<String> findAllCategories() {
         String xpath =
                 "for $category in doc('database.xml')/videoLibrary/categories/category " +
                         "return data($category/@name)";
-        CompiledExpression compiledExpression = xQueryService.compile(xpath);
-        ResourceSet result = xQueryService.execute(compiledExpression);
-        ResourceIterator i = result.getIterator();
         List<String> categories = new ArrayList<>();
-        Resource res = null;
-        while (i.hasMoreResources()) {
-            try {
-                res = i.nextResource();
-                categories.add((String) res.getContent());
-            } finally {
+        try {
+
+            CompiledExpression compiledExpression = xQueryService.compile(xpath);
+            ResourceSet result = xQueryService.execute(compiledExpression);
+            ResourceIterator i = result.getIterator();
+            Resource res = null;
+            while (i.hasMoreResources()) {
                 try {
-                    ((EXistResource) res).freeResources();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
+                    res = i.nextResource();
+                    categories.add((String) res.getContent());
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
                 }
             }
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
         }
         return categories;
     }
 
-    public void deleteMedium(String mediumId) throws XMLDBException {
-        CompiledExpression compiledExpression = xQueryService.compile("update delete doc('database.xml')/videoLibrary/categories/category");
-        xQueryService.execute(compiledExpression);
+    public void deleteMedium(String mediumId) {
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile("update delete doc('database.xml')/videoLibrary/categories/category/medium[@id='" + mediumId + "']");
+            xQueryService.execute(compiledExpression);
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public String findAllMediumsByCategory(String category) throws XMLDBException {
+    public String findAllMediumsByCategory(String category) {
         String xpath =
                 "<mediums>" +
                         "{for $medium in doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']/medium " +
                         "return $medium}" +
                         "</mediums>";
-        CompiledExpression compiledExpression = xQueryService.compile(xpath);
-        ResourceSet result = xQueryService.execute(compiledExpression);
-        ResourceIterator i = result.getIterator();
         String mediums = "";
-        Resource res = null;
-        while (i.hasMoreResources()) {
-            try {
-                res = i.nextResource();
-                mediums = ((String) res.getContent());
-            } finally {
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile(xpath);
+            ResourceSet result = xQueryService.execute(compiledExpression);
+            ResourceIterator i = result.getIterator();
+            Resource res = null;
+            while (i.hasMoreResources()) {
                 try {
-                    ((EXistResource) res).freeResources();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
+                    res = i.nextResource();
+                    mediums = ((String) res.getContent());
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
                 }
             }
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
         }
         return mediums;
     }
