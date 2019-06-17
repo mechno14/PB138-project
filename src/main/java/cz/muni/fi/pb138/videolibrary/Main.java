@@ -5,6 +5,7 @@ import java.util.List;
 public class Main {
     public static void main(String args[]) throws Exception {
         NativeXMLDatabaseManager db = new NativeXMLDatabaseManager();
+        db.createCategory("a");
         db.createCategory("TEST");
         db.createCategory("TEST2");
         db.deleteCategory("TEST2");
