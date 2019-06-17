@@ -4,10 +4,10 @@ import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
+import org.xmldb.api.base.Collection;
 import org.xmldb.api.modules.XQueryService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class NativeXMLDatabaseManager {
 
@@ -45,12 +45,12 @@ public class NativeXMLDatabaseManager {
         CompiledExpression compiledExpression = xQueryService.compile(xpath);
         ResourceSet result = xQueryService.execute(compiledExpression);
         ResourceIterator i = result.getIterator();
-        List<String> ids = new ArrayList<>();
+        Set<Integer> ids = new HashSet<>();
         Resource res = null;
         while (i.hasMoreResources()) {
             try {
                 res = i.nextResource();
-                ids.add((String) res.getContent());
+                ids.add(Integer.valueOf((String) res.getContent()));
             } finally {
                 try {
                     ((EXistResource) res).freeResources();
@@ -59,7 +59,15 @@ public class NativeXMLDatabaseManager {
                 }
             }
         }
-        return Integer.toString(ids.size() + 1);
+        int counter = 1;
+        for (Integer id:
+             ids) {
+            if (id != counter) {
+                return Integer.toString(counter);
+            }
+            counter++;
+        }
+        return Integer.toString(counter);
     }
 
     public void createCategory(String category) throws XMLDBException {
@@ -76,7 +84,6 @@ public class NativeXMLDatabaseManager {
         CompiledExpression compiledExpression = xQueryService.compile("update insert " + mediumQuery +
                 " into doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']");
         xQueryService.execute(compiledExpression);
-        System.out.println("test");
     }
 
     public void deleteMediumFromCategory(String mediumId, String category) throws XMLDBException {
