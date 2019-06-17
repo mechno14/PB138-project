@@ -39,32 +39,48 @@ public class MediumManagerImpl implements MediumManager {
         if (medium.getId() != null)
             throw new IllegalEntityException("Entity has already id.");
 
-        //databaseManager.addMediumToCategory(medium);
+        databaseManager.createMedium(medium);
 
     }
 
     @Override
     public void updateMedium(Medium medium) {
+        validate(medium);
 
+        if (medium.getId() == null || findMediumById(medium.getId()) == null)
+            throw new IllegalEntityException("Entity is not in db.");
+
+        databaseManager.updateMedium(medium);
     }
 
     @Override
     public void deleteMedium(Medium medium) {
+        validate(medium);
 
+        if (medium.getId() == null || findMediumById(medium.getId()) == null)
+            throw new IllegalEntityException("Entity is not in db.");
+
+        databaseManager.deleteMedium(medium);
     }
 
     @Override
     public Medium findMediumById(Long id) {
-        return null;
+        if (id == null)
+            throw new IllegalArgumentException("Id cannot be null");
+
+        return databaseManager.findMediumById(id);
     }
 
     @Override
     public Medium findMediumByName(String name) {
-        return null;
+        if (name == null || name.isEmpty())
+            throw new IllegalArgumentException("Name cannot be null or empty.");
+
+        return databaseManager.findMediumByName(name);
     }
 
     @Override
     public Set<Medium> findAllMedia() {
-        return null;
+        return databaseManager.findAllMedia();
     }
 }
