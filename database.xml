@@ -5,7 +5,7 @@
         xsi:noNamespaceSchemaLocation='scheme.xsd'>
 
     <categories>
-        <category name="Movies" price="5.90">
+        <category name="Movies">
             <medium id="1">
                 <mediumType>DVD</mediumType>
                 <name>Shrek</name>
@@ -15,7 +15,6 @@
                     <actor>Eddie Murphy</actor>
                     <actor>Cameron Diaz</actor>
                 </actors>
-                <status>available</status>
                 <genres>
                     <genre>Animated</genre>
                     <genre>Adventure</genre>
@@ -32,7 +31,6 @@
                     <actor>Rudolf Deyl</actor>
                     <actor>Miloš Kopecký</actor>
                 </actors>
-                <status>broken</status>
                 <genres>
                     <genre>Adventure</genre>
                     <genre>Comedy</genre>
@@ -49,7 +47,6 @@
                     <actor>Kim Cattrall</actor>
                     <actor>Cynthia Nixon</actor>
                 </actors>
-                <status>lost</status>
                 <genres>
                     <genre>Comedy</genre>
                     <genre>Drama</genre>
@@ -58,19 +55,17 @@
                 <releaseYear>2008</releaseYear>
             </medium>
         </category>
-        <category name="Guides and Tutorials" price="10.90">
+        <category name="Guides and Tutorials">
             <medium id="4">
                 <mediumType>DVD</mediumType>
                 <name>Photoshop CS6 Tutorial Training</name>
                 <length>1200</length>
-                <status>available</status>
                 <releaseYear>2015</releaseYear>
             </medium>
             <medium id="5">
                 <mediumType>DVD</mediumType>
                 <name>Dance Lessons 101: The Basics and Beyond!</name>
                 <length>unknown</length>
-                <status>rented</status>
                 <releaseYear>2012</releaseYear>
             </medium>
         </category>
