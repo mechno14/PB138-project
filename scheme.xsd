@@ -41,7 +41,6 @@
             <xsd:element name="name" type="nonEmptyString" /> <!-- mozno specialiovat aby neobsahovalo divne znaky -->
             <xsd:element name="length" type="lengthType" />
             <xsd:element name="actors" type="listOfActors" minOccurs="0"/>
-            <xsd:element name="status" type="statusEnum" />
             <xsd:element name="genres" type="genresType" minOccurs="0"/>
             <xsd:element name="releaseYear" type="xsd:nonNegativeInteger" />
         </xsd:all>
@@ -73,15 +72,6 @@
     <xsd:simpleType name="nameString">
         <xsd:restriction base="xsd:string">
             <xsd:pattern value="[\p{Lu}][\p{Ll}]+(\s[\p{Lu}][\p{Ll}]+)(\s[\p{Lu}][\p{Ll}]+)*"/>
-        </xsd:restriction>
-    </xsd:simpleType>
-
-    <xsd:simpleType name="statusEnum">
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="rented" />
-            <xsd:enumeration value="available" />
-            <xsd:enumeration value="lost" />
-            <xsd:enumeration value="broken" />
         </xsd:restriction>
     </xsd:simpleType>
 
