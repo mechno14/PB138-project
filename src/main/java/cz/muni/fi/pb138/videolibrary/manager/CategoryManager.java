@@ -1,11 +1,11 @@
-package cz.muni.fi.pb138.videolibrary.DAO;
+package cz.muni.fi.pb138.videolibrary.manager;
 
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.*;
 import java.util.Set;
 
-public interface CategoryDAO {
+public interface CategoryManager {
 
     /**
      * Creates new category in database.

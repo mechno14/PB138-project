@@ -2,6 +2,7 @@ package cz.muni.fi.pb138.videolibrary;
 
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import org.exist.xmldb.EXistResource;
+import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XQueryService;
@@ -9,6 +10,7 @@ import org.xmldb.api.modules.XQueryService;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class NativeXMLDatabaseManager {
 
     private static final String DRIVER = "org.exist.xmldb.DatabaseImpl";

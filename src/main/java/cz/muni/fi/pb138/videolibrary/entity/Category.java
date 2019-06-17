@@ -7,20 +7,17 @@ import java.util.Set;
 public class Category {
     private Long id;
     private String name;
-    private double price;
     private Set<Medium> media;
 
     public Category() {
     }
 
-    public Category(String name, double price) {
+    public Category(String name) {
         this.name = name;
-        this.price = price;
     }
 
-    public Category(String name, double price, Set<Medium> media) {
+    public Category(String name, Set<Medium> media) {
         this.name = name;
-        this.price = price;
         this.media = media;
     }
 
@@ -38,14 +35,6 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public Set<Medium> getMedia() {

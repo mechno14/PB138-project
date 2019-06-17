@@ -30,6 +30,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.1.5.RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-core</artifactId>
             <version>4.7.0</version>
