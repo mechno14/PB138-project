@@ -41,6 +41,8 @@ public class Main {
 
         System.out.println(db.getFirstFreeId());
 
+        System.out.println(db.findMediumById("1"));
+
         db.close();
     }
 }
