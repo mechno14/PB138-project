@@ -20,17 +20,6 @@ public interface MediumManager {
     void createMedium(Medium medium);
 
     /**
-     * Updates the medium in database.
-     *
-     * @param medium medium to be updated.
-     * @throws IllegalArgumentException when medium is null.
-     * @throws EntityValidationException when medium has null attributes or
-     *          name is empty.
-     * @throws IllegalEntityException when medium is not in database.
-     */
-    void updateMedium(Medium medium);
-
-    /**
      * Deletes the medium from database.
      *
      * @param medium medium to be deleted.
@@ -57,10 +46,4 @@ public interface MediumManager {
      */
     Medium findMediumByName(String name);
 
-    /**
-     * Finds all media in database.
-     *
-     * @return set of all media in database.
-     */
-    Set<Medium> findAllMedia();
 }

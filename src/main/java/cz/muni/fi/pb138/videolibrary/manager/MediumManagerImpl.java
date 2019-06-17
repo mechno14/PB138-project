@@ -44,16 +44,6 @@ public class MediumManagerImpl implements MediumManager {
     }
 
     @Override
-    public void updateMedium(Medium medium) {
-        validate(medium);
-
-        if (medium.getId() == null || findMediumById(medium.getId()) == null)
-            throw new IllegalEntityException("Entity is not in db.");
-
-        databaseManager.updateMedium(medium);
-    }
-
-    @Override
     public void deleteMedium(Medium medium) {
         validate(medium);
 
@@ -79,8 +69,4 @@ public class MediumManagerImpl implements MediumManager {
         return databaseManager.findMediumByName(name);
     }
 
-    @Override
-    public Set<Medium> findAllMedia() {
-        return databaseManager.findAllMedia();
-    }
 }
