@@ -27,8 +27,7 @@
             <xsd:element name="medium" type="mediumType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
         <xsd:attribute name="name" type="nonEmptyString" use="required"/>
-        <xsd:attribute name="price" type="xsd:float" use="required"/>
-    </xsd:complexType>
+     </xsd:complexType>
 
     <xsd:simpleType name="nonEmptyString">
         <xsd:restriction base="xsd:string">

@@ -5,7 +5,7 @@
         xsi:noNamespaceSchemaLocation='scheme.xsd'>
 
     <categories>
-        <category name="Movies" price="5.90">
+        <category name="Movies">
             <medium id="1">
                 <mediumType>DVD</mediumType>
                 <name>Shrek</name>
@@ -58,7 +58,7 @@
                 <releaseYear>2008</releaseYear>
             </medium>
         </category>
-        <category name="Guides and Tutorials" price="10.90">
+        <category name="Guides and Tutorials">
             <medium id="4">
                 <mediumType>DVD</mediumType>
                 <name>Photoshop CS6 Tutorial Training</name>
