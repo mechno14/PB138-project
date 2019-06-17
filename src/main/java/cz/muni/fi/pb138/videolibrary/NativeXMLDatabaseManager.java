@@ -1,5 +1,6 @@
 package cz.muni.fi.pb138.videolibrary;
 
+import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class NativeXMLDatabaseManager {
     private final XQueryService xQueryService;
 
 
-    NativeXMLDatabaseManager() throws Exception {
+    public NativeXMLDatabaseManager() throws Exception {
 
         Class cl = Class.forName(DRIVER);
         Database database = (Database) cl.newInstance();
@@ -79,6 +80,33 @@ public class NativeXMLDatabaseManager {
 
     public void deleteCategory(String category) throws XMLDBException {
         CompiledExpression compiledExpression = xQueryService.compile("update delete doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']");
+        xQueryService.execute(compiledExpression);
+    }
+
+    public void addMedium(Medium medium) throws XMLDBException {
+        String mediumQuery = "<medium id='"+ medium.getId() +"'>" +
+                "<mediumType>"+ medium.getMediumType().toString() +"</mediumType>"+
+                "<name>"+medium.getName()+"</name>"+
+                "<length>"+Integer.valueOf(medium.getLength())+"</length>"+
+                "<actors>";
+
+        for (String actor:
+             medium.getActors()) {
+            mediumQuery += "<actor>"+actor+"</actor>";
+        }
+
+        mediumQuery += "</actors><genres>";
+
+        for (Genre genre:
+        medium.getGenres()) {
+            mediumQuery += "<genre>"+ genre.toString() +"</genre>";
+        }
+
+        mediumQuery += "</genres><releaseYear>" + medium.getReleaseYear().toString()
+                + "</releaseYear></medium>";
+
+        CompiledExpression compiledExpression = xQueryService.compile("update insert " + mediumQuery +
+                " into doc('database.xml')/videoLibrary/categories/category[@name='" + medium.getCategory() + "']");
         xQueryService.execute(compiledExpression);
     }
 
@@ -142,10 +170,10 @@ public class NativeXMLDatabaseManager {
         return medium;
     }
 
-    public void moveMediumToDifferentCategory(String mediumId, String category) throws XMLDBException {
-        String medium = findMediumById(mediumId);
-        deleteMedium(mediumId);
-        addMediumToCategory(medium, category);
+    public void moveMediumToDifferentCategory(Medium medium, String category) throws XMLDBException {
+        String mediumQuery = findMediumById(medium.getId().toString());
+        deleteMedium(medium.getId().toString());
+        addMediumToCategory(mediumQuery, category);
     }
 
     public List<String> findAllCategories() throws XMLDBException {
