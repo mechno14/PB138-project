@@ -13,5 +13,38 @@
         <maven.compiler.target>1.9</maven.compiler.target>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>exist-db</id>
+            <url>http://repo.evolvedbinary.com/content/repositories/exist-db/</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+        <repository>
+            <id>exist-db-snapshots</id>
+            <url>http://repo.evolvedbinary.com/content/repositories/exist-db-snapshots/</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.exist-db</groupId>
+            <artifactId>exist-core</artifactId>
+            <version>4.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.xmldb-org</groupId>
+            <artifactId>xmldb-api</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.xmldb-org</groupId>
+            <artifactId>xmldb-api</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
