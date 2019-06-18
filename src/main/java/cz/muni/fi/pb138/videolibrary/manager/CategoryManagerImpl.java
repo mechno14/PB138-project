@@ -10,9 +10,12 @@ import java.util.Set;
 
 public class CategoryManagerImpl implements CategoryManager {
 
-    @Autowired
+    //@Autowired
     NativeXMLDatabaseManager databaseManager;
 
+    public CategoryManagerImpl(NativeXMLDatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
 
     private void validate(Category category) {
         if (category == null)
