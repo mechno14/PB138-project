@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="1075.0" prefWidth="1280.0" VBox.vgrow="ALWAYS">
+      <children>
+            <ImageView disable="true" fitHeight="873.0" fitWidth="1109.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@1.uvod.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="452.0" fitWidth="705.0" layoutX="37.0" layoutY="-51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@TITLE.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="458.0" fitWidth="452.0" layoutX="37.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@categories.png" />
+               </image>
+            </ImageView>
+            <ChoiceBox id="ctgr" layoutX="237.0" layoutY="197.0" prefHeight="26.0" prefWidth="224.0" stylesheets="@ctgr.css" />
+            <ImageView accessibleRole="BUTTON" fitHeight="162.0" fitWidth="248.0" layoutX="826.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@EXIT.png" />
+               </image>
+            </ImageView>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
