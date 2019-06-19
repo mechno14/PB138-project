@@ -47,22 +47,20 @@
             <artifactId>xmldb-api</artifactId>
             <version>1.7.0</version>
         </dependency>
-<<<<<<< HEAD
+
          <!-- https://mvnrepository.com/artifact/org.odftoolkit/simple-odf -->
         <dependency>
             <groupId>org.odftoolkit</groupId>
             <artifactId>simple-odf</artifactId>
             <version>0.6</version>
         </dependency>
-=======
 
->>>>>>> GUI
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
-<<<<<<< HEAD
+
          </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -73,11 +71,7 @@
 
 
 </project>
-=======
-        </dependency>
-
-
-
+    <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -144,4 +138,3 @@
     </build>
 
 </project>
->>>>>>> GUI
