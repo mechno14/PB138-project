@@ -10,8 +10,12 @@ import java.util.Set;
 
 public class MediumManagerImpl implements MediumManager {
 
-    @Autowired
+    //@Autowired
     NativeXMLDatabaseManager databaseManager;
+
+    public MediumManagerImpl(NativeXMLDatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
 
     private void validate(Medium medium) {
         if (medium == null)
@@ -44,16 +48,6 @@ public class MediumManagerImpl implements MediumManager {
     }
 
     @Override
-    public void updateMedium(Medium medium) {
-        validate(medium);
-
-        if (medium.getId() == null || findMediumById(medium.getId()) == null)
-            throw new IllegalEntityException("Entity is not in db.");
-
-        databaseManager.updateMedium(medium);
-    }
-
-    @Override
     public void deleteMedium(Medium medium) {
         validate(medium);
 
@@ -68,7 +62,8 @@ public class MediumManagerImpl implements MediumManager {
         if (id == null)
             throw new IllegalArgumentException("Id cannot be null");
 
-        return databaseManager.findMediumById(id);
+        //return databaseManager.findMediumById(id);
+        return null;
     }
 
     @Override
@@ -76,11 +71,8 @@ public class MediumManagerImpl implements MediumManager {
         if (name == null || name.isEmpty())
             throw new IllegalArgumentException("Name cannot be null or empty.");
 
-        return databaseManager.findMediumByName(name);
+        //return databaseManager.findMediumByName(name);
+        return null;
     }
 
-    @Override
-    public Set<Medium> findAllMedia() {
-        return databaseManager.findAllMedia();
-    }
 }

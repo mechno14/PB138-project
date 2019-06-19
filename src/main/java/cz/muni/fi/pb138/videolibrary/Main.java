@@ -4,6 +4,8 @@ import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.entity.MediumType;
+import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
+import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 
 import java.time.Year;
 import java.util.HashSet;
@@ -12,7 +14,7 @@ import java.util.Locale;
 import java.util.Set;
 
 public class Main {
-    public static void main(String args[]) throws Exception {
+    public static void main(String args[]) throws Exception {/*
         NativeXMLDatabaseManager db = new NativeXMLDatabaseManager();
 
         db.addMediumToCategory("<medium id=\""+ db.getFirstFreeId() +"\"><mediumType>DVD</mediumType>\n" +
@@ -56,6 +58,13 @@ public class Main {
 
         System.out.println(db.findMediumById("1"));
 
-        db.close();
+        db.close();*/
+
+        NativeXMLDatabaseManager db = new NativeXMLDatabaseManager();
+        CategoryManager categoryManager = new CategoryManagerImpl(db);
+        Set<Category> categories = categoryManager.findAllCategories();
+        for (Category category : categories) {
+            System.out.println(category.getName());
+        }
     }
 }

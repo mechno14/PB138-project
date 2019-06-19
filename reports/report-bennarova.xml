@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+	<info>
+		<title>PB138 projekt - Finálna správa</title>
+        <author>
+            <personname>Simona Bennárová</personname>
+            <email>456270@mail.muni.cz</email>
+        </author>
+    </info>
+
+    <sect1 xml:id="XML-database">
+    	<title>XML databáza</title>
+    	<para>
+      Mojou prvou úlohou bolo spraviť XML databázu. Pre databázu som najprv spravila XML schému(súbor scheme.xsd), ktorej elementy a atribúty som konzultovala s mojím týmom a
+      následne na základe tejto XML schémy som vytvorila jednoduchú XML databázu reprezentujúcu domácu videotéku(súbor database.xml). Táto databáza slúžila aj na testovanie implementácie.
+    	</para>
+    </sect1>
+    <sect1 xml:id="ODFUtility">
+    	<title>ODFUtility implementácia/title>
+    	<para>
+            Moja ďalšia úloha bola implementovať triedu pre prácu s ODF formátom. Túto funkcionalitu som implementovala v triede ODFUtility.class, ktorá obsahuje metódy pre čítanie z ODF súboru,
+            zápis do ODF súboru a metódy na transformovanie z a do dokumentu. Taktiež som vytvorila ukážkový súbor importFile.ods, v ktorom jednotlivé záložky reprezentujú kategórie a tabulky v nich 
+            jednotlivé médiá vo videotéke. 
+            //TODO Denis ako help so spojenim tried s impl
+    	</para>
+    </sect1>
+    <sect1 xml:id="tests">
+      <title>Testy implementácie</title>
+      <para>
+      Mojou poslednou úlohou bolo napísať testy na overenie správnosti implementácie manažerských tried. Pre tieto testy som sa rozhodla využiť <ulink url="https://junit.org/junit5/">JUnit 5</ulink>
+      pretože podporuje novšie verzie Javy(verzia 8 a vyššie). Ku každému managerovi som napísala sadu testov, testujúcich nesprávne hodnoty(napríklad null ako jeden z parametrov), kedy som kontrolovala
+      aj vyhadzovanie správnych výnimiek. Ďalej som testovala aj správnosť operácií create, delete, findAll.
+      </para>
+      <para>
+            Pri testoch boli pre zjednodušenie vytvárania testovacích objektov použité triedy CategoryBuilder a
+            MovieBuilder. Tieto buildre umožňujú jednoduché a prehľadné nastavenie atribútov pred vytvorením objektu.
+      </para>
+    </sect1>
+</article>

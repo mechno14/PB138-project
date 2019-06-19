@@ -4,23 +4,24 @@ import cz.muni.fi.pb138.videolibrary.NativeXMLDatabaseManager;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
-import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
 public class CategoryManagerImpl implements CategoryManager {
 
-    @Autowired
+    //@Autowired
     NativeXMLDatabaseManager databaseManager;
 
+    public CategoryManagerImpl(NativeXMLDatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
 
     private void validate(Category category) {
         if (category == null)
             throw new IllegalArgumentException("Category cannot be null.");
 
-        if (category.getName() == null ||
-                category.getMedia() == null)
+        if (category.getName() == null)
             throw new EntityValidationException("Entity has null attribute(s).");
 
         if (category.getName().isEmpty())
@@ -32,38 +33,14 @@ public class CategoryManagerImpl implements CategoryManager {
     public void createCategory(Category category) {
         validate(category);
 
-        if (category.getId() != null)
-            throw new IllegalEntityException("Entity has already id.");
-
         databaseManager.createCategory(category);
-    }
-
-    @Override
-    public void updateCategory(Category category) {
-        validate(category);
-
-        if (category.getId() == null || findCategoryById(category.getId()) == null)
-            throw new IllegalEntityException("Entity is not in db.");
-
-        databaseManager.updateCategory(category);
     }
 
     @Override
     public void deleteCategory(Category category) {
         validate(category);
 
-        if (category.getId() == null || findCategoryById(category.getId()) == null)
-            throw new IllegalEntityException("Entity is not in db.");
-
         databaseManager.deleteCategory(category);
-    }
-
-    @Override
-    public Category findCategoryById(Long id) {
-        if (id == null)
-            throw new IllegalArgumentException("Id cannot be null");
-
-        return databaseManager.findCategoryById(id);
     }
 
     @Override
@@ -72,7 +49,9 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    public void moveMedium(Medium medium, Category from, Category to) {
-
+    public void moveMedium(Medium medium, Category category) {
+        databaseManager.deleteMedium(medium);
+        medium.setCategory(category);
+        databaseManager.createMedium(medium);
     }
 }
