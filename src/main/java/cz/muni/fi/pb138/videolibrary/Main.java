@@ -14,16 +14,6 @@ import java.util.Set;
 public class Main {
     public static void main(String args[]) throws Exception {
         NativeXMLDatabaseManager db = new NativeXMLDatabaseManager();
-        db.deleteCategory("TEST");
-        db.createCategory("TEST");
-        db.createCategory("TEST2");
-        db.deleteCategory("TEST2");
-        List<String> categories = db.findAllCategories();
-        for (String cat:
-        categories) {
-            System.out.println(cat);
-        }
-        System.out.println(db.findAllMediumsByCategory("Movies"));
 
         db.addMediumToCategory("<medium id=\""+ db.getFirstFreeId() +"\"><mediumType>DVD</mediumType>\n" +
                 "                <name>HERK</name>\n" +
@@ -58,8 +48,8 @@ public class Main {
 
         medium.setId(Long.parseLong(db.getFirstFreeId()));
 
-        db.createCategory(category.getName());
-        db.addMedium(medium);
+        db.createCategory(category);
+        db.createMedium(medium);
 
 
         System.out.println(db.getFirstFreeId());
