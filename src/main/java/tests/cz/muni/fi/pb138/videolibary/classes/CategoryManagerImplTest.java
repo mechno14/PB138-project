@@ -1,6 +1,7 @@
 package tests.cz.muni.fi.pb138.videolibary.classes;
 
 
+import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
@@ -11,7 +12,8 @@ import java.util.Set;
 
 
 public class CategoryManagerImplTest {
-    private CategoryManagerImpl manager = new CategoryManagerImpl();
+    XMLDBManagerImpl xmlDBManager;
+    private CategoryManagerImpl manager = new CategoryManagerImpl(xmlDBManager);
 
     private CategoryBuilder categoryDocumentaries() {
         return new CategoryBuilder()
@@ -37,7 +39,7 @@ public class CategoryManagerImplTest {
     }
 
     @Test
-    void createDupliciteCategory()  throws Exception {
+    void createDupliciteCategory() {
         Category category = categoryDocumentaries().build();
         manager.createCategory(category);
         Assertions.assertThrows(IllegalArgumentException.class, ()-> {
