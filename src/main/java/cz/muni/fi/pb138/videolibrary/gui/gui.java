@@ -1,6 +1,5 @@
 package cz.muni.fi.pb138.videolibrary.gui;
 
-import cz.muni.fi.pb138.videolibrary.XMLDBManager;
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
@@ -11,15 +10,11 @@ import cz.muni.fi.pb138.videolibrary.manager.MediumManagerImpl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.StringReader;
-import java.time.Year;
+import java.util.Iterator;
+import java.util.Set;
 
 public class gui {
 
@@ -43,6 +38,20 @@ public class gui {
                 setComboBox();
             }
         });
+        comboBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TableModel tableModel = (TableModel) table1.getModel();
+                tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
+            }
+        });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TableModel tableModel = (TableModel) table1.getModel();
+                tableModel.removeRow(table1.getSelectedRow());
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -63,59 +72,40 @@ public class gui {
         panel = new JPanel();
         comboBox1 = new JComboBox();
 
-        String column_names[]= {"Name","Genre","Year","Type"};
-        TableModel table_model=new DefaultTableModel(column_names,4);
-        table1 = new JTable(table_model);
         XMLDBManagerImpl nativeXMLDatabaseManager = new XMLDBManagerImpl();
         categoryManager = new CategoryManagerImpl(nativeXMLDatabaseManager);
         mediumManager = new MediumManagerImpl(nativeXMLDatabaseManager);
-        System.out.println("ssssssssssssssss");
+        setComboBox();
+
+
+        cz.muni.fi.pb138.videolibrary.gui.TableModel tableModel =
+                new cz.muni.fi.pb138.videolibrary.gui.TableModel
+                        (mediumManager, new Category(comboBox1.getSelectedItem().toString()));
+        table1 = new JTable(tableModel);
+
         setComboBox();
 
     }
 
     private void setComboBox() {
         comboBox1.removeAllItems();
-        for(Category category : categoryManager.findAllCategories()) {
+        Category cat = new Category();
+        Set<Category> categories = categoryManager.findAllCategories();
+        for(Category category : categories) {
             comboBox1.addItem(category.getName());
         }
-
-        mediumManager.findMediumByName("Shrek");
-
-
-        String xmlString = "<medium id=\"1\">\n" +
-                "                <mediumType>DVD</mediumType>\n" +
-                "                <name>Shrek</name>\n" +
-                "                <length>90</length>\n" +
-                "                <actors>\n" +
-                "                    <actor>Mike Myers</actor>\n" +
-                "                    <actor>Eddie Murphy</actor>\n" +
-                "                    <actor>Cameron Diaz</actor>\n" +
-                "                </actors>\n" +
-                "                <genres>\n" +
-                "                    <genre>Animated</genre>\n" +
-                "                    <genre>Adventure</genre>\n" +
-                "                    <genre>Comedy</genre>\n" +
-                "                </genres>\n" +
-                "                <releaseYear>2001</releaseYear>\n" +
-                "            </medium>";
-
-        JAXBContext jaxbContext;
-        try
-        {
-            jaxbContext = JAXBContext.newInstance(Medium.class);
-
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
-            Medium employee = (Medium) jaxbUnmarshaller.unmarshal(new StringReader(xmlString));
-
-            System.out.println(employee.getId() + employee.getName() + employee.getLength()
-                + employee.getReleaseYear() + employee.getActors().size()
-                    + employee.getGenres().iterator().next());
+/*
+        Iterator<Category> it = categories.iterator();
+        while (it.hasNext()) {
+            cat = it.next();
         }
-        catch (JAXBException e)
-        {
-            e.printStackTrace();
-        }
+
+        Set<Medium> media = mediumManager.findAllMediaByCategory
+                (cat);
+
+        for (Medium medium : media) {
+            System.out.println(medium.getName());
+        }*/
+
     }
 }

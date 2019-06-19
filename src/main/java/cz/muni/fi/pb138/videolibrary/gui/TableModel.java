@@ -5,32 +5,66 @@ import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class TableModel extends AbstractTableModel {
 
-    private Set<Medium> media;
-    private MediumManager mediumManager;
+    private List<Medium> media;
     private Category category;
+    private MediumManager mediumManager;
+
+    private String[] columnNames = {"Name","Genre","Year","Type"};
 
     public TableModel(MediumManager mediumManager, Category category) {
         this.mediumManager = mediumManager;
-        media = mediumManager.findAllMediaByCategory(category);
+        this.category = category;
+        media = new ArrayList<>(mediumManager.findAllMediaByCategory(category));
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+        media = new ArrayList<>(mediumManager.findAllMediaByCategory(category));
+        fireTableDataChanged();
+    }
+
+    public void removeRow(int i) {
+        Medium medium = media.get(i);
+        mediumManager.deleteMedium(medium);
+        media = new ArrayList<>(mediumManager.findAllMediaByCategory(category));
+        fireTableDataChanged();
+    }
+
+    @Override
+    public String getColumnName(int index) {
+        return columnNames[index];
     }
 
     @Override
     public int getRowCount() {
-        return 0;
+        return media.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 0;
+        return 4;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return null;
+        Medium medium = media.get(rowIndex);
+        switch (columnIndex) {
+            case 0:
+                return medium.getName();
+            case 1:
+                return 0;
+            case 2:
+                return medium.getReleaseYear();
+            case 3:
+                return medium.getMediumType();
+            default:
+                throw new IllegalArgumentException("columnIndex");
+        }
     }
 }
