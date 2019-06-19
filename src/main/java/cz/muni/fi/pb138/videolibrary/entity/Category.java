@@ -1,5 +1,6 @@
 package cz.muni.fi.pb138.videolibrary.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;

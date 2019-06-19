@@ -1,5 +1,6 @@
 package cz.muni.fi.pb138.videolibrary.manager;
 
+import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
@@ -45,5 +46,9 @@ public interface MediumManager {
      * @throws IllegalArgumentException when name is null or empty.
      */
     Medium findMediumByName(String name);
+
+    /**
+    */
+    Set<Medium> findAllMediaByCategory(Category category);
 
 }

@@ -1,6 +1,7 @@
 package cz.muni.fi.pb138.videolibrary.manager;
 
 import cz.muni.fi.pb138.videolibrary.NativeXMLDatabaseManager;
+import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
@@ -10,6 +11,10 @@ import java.util.Set;
 public class MediumManagerImpl implements MediumManager {
 
     NativeXMLDatabaseManager databaseManager;
+
+    public MediumManagerImpl(NativeXMLDatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
 
     private void validate(Medium medium) {
         if (medium == null)
@@ -66,7 +71,14 @@ public class MediumManagerImpl implements MediumManager {
             throw new IllegalArgumentException("Name cannot be null or empty.");
 
         //return databaseManager.findMediumByName(name);
+        System.out.println(databaseManager.findMediumByName(name));
         return null;
     }
 
+    @Override
+    public Set<Medium> findAllMediaByCategory(Category category) {
+
+        return null;
+        //return databaseManager.findAllMediumsByCategory(category.getName());
+    }
 }

@@ -1,8 +1,11 @@
 package cz.muni.fi.pb138.videolibrary.entity;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Year;
 import java.util.Set;
 
+@XmlRootElement
 public class Medium {
     private Long id;
     private String name;
@@ -32,6 +35,7 @@ public class Medium {
         return id;
     }
 
+    @XmlElement
     public void setId(Long id) {
         this.id = id;
     }
@@ -40,6 +44,7 @@ public class Medium {
         return name;
     }
 
+    @XmlElement
     public void setName(String name) {
         this.name = name;
     }
@@ -48,6 +53,7 @@ public class Medium {
         return mediumType;
     }
 
+    @XmlElement
     public void setMediumType(MediumType mediumType) {
         this.mediumType = mediumType;
     }
@@ -56,6 +62,7 @@ public class Medium {
         return length;
     }
 
+    @XmlElement
     public void setLength(int length) {
         this.length = length;
     }
@@ -64,6 +71,7 @@ public class Medium {
         return category;
     }
 
+    @XmlElement
     public void setCategory(Category category) {
         this.category = category;
     }
@@ -72,6 +80,7 @@ public class Medium {
         return actors;
     }
 
+    @XmlElement
     public void setActors(Set<String> actors) {
         this.actors = actors;
     }
@@ -80,6 +89,7 @@ public class Medium {
         return genres;
     }
 
+    @XmlElement
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
@@ -88,6 +98,7 @@ public class Medium {
         return releaseYear;
     }
 
+    @XmlElement
     public void setReleaseYear(Year releaseYear) {
         this.releaseYear = releaseYear;
     }
