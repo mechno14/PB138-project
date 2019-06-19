@@ -13,13 +13,8 @@ import java.util.Set;
 
 
 public class CategoryManagerImplTest {
-    private XMLDBManagerImpl xmlDBManager;
-    private CategoryManagerImpl manager = new CategoryManagerImpl(xmlDBManager);
+    private CategoryManagerImpl manager;
 
-    @BeforeEach
-    void setXmlDBManager() throws Exception {
-        xmlDBManager = new XMLDBManagerImpl();
-    }
     private CategoryBuilder categoryDocumentaries() {
         return new CategoryBuilder()
                 .name("Documentaries");
@@ -34,6 +29,12 @@ public class CategoryManagerImplTest {
     private CategoryBuilder categoryWithNullName() {
         return new CategoryBuilder()
                 .name(null);
+    }
+
+    @BeforeEach
+    void setXmlDBManager() throws Exception {
+        XMLDBManagerImpl xmlDBManager = new XMLDBManagerImpl();
+        manager =  new CategoryManagerImpl(xmlDBManager);
     }
 
     @Test
@@ -87,26 +88,30 @@ public class CategoryManagerImplTest {
     void findAllCathegories() {
         Category category1 = categoryDocumentaries().build();
         Category category2 = categoryMovies().build();
+        Set<Category> allCategories = manager.findAllCategories();
+        int numOfCat = allCategories.size();
         manager.createCategory(category1);
         manager.createCategory(category2);
-        Set<Category> allCategories = manager.findAllCategories();
-        Assertions.assertTrue(allCategories.size() == 2);
-        Assertions.assertTrue(allCategories.contains(categoryDocumentaries().build()));
-        Assertions.assertTrue(allCategories.contains(categoryMovies().build()));
+        allCategories = manager.findAllCategories();
+        Assertions.assertTrue(allCategories.size() == numOfCat + 2);
+        Assertions.assertTrue(allCategories.contains(category1));
+        Assertions.assertTrue(allCategories.contains(category2));
     }
 
     @Test
-    void deleteCathegory() {
+    void deleteCathegory() throws Exception {
         Category category1 = categoryDocumentaries().build();
         Category category2 = categoryMovies().build();
+        Set<Category> allCategories = manager.findAllCategories();
+        int numOfElements = allCategories.size();
         manager.createCategory(category1);
         manager.createCategory(category2);
-        Set<Category> allCategories = manager.findAllCategories();
-        Assertions.assertTrue(allCategories.size() == 2);
-        manager.deleteCategory(categoryDocumentaries().build());
-        Assertions.assertTrue(allCategories.size() == 1);
-        Assertions.assertTrue(!allCategories.contains(categoryDocumentaries().build()));
-        Assertions.assertTrue(allCategories.contains(categoryMovies().build()));
+        allCategories = manager.findAllCategories();
+        Assertions.assertTrue(allCategories.size() == (numOfElements + 2));
+        manager.deleteCategory(category1);
+        allCategories = manager.findAllCategories();
+        Assertions.assertTrue(allCategories.size() == (numOfElements + 1));
+        Assertions.assertFalse(allCategories.contains(category1));
     }
 
 
