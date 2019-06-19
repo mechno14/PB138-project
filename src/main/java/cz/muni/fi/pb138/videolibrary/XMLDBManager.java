@@ -20,7 +20,7 @@ public interface XMLDBManager {
      * Get first free ID in database.
      * @return first free ID in database.
      */
-    public String getFirstFreeId();
+    public Long getFirstFreeId();
 
     /**
      * Creates new Category in database.

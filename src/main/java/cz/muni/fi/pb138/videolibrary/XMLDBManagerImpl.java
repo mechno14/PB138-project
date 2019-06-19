@@ -41,7 +41,7 @@ public class XMLDBManagerImpl implements XMLDBManager{
         collection.close();
     }
 
-    public String getFirstFreeId() {
+    public Long getFirstFreeId() {
         String xpath =
                 "for $category in doc('database.xml')/videoLibrary/categories/category " +
                         "for $medium in $category/medium " +
@@ -71,11 +71,11 @@ public class XMLDBManagerImpl implements XMLDBManager{
         for (Integer id :
                 ids) {
             if (id != counter) {
-                return Integer.toString(counter);
+                return (long)counter;
             }
             counter++;
         }
-        return Integer.toString(counter);
+        return (long)counter;
     }
 
     public void createCategory(Category category) {
@@ -97,6 +97,9 @@ public class XMLDBManagerImpl implements XMLDBManager{
     }
 
     public void createMedium(Medium medium) {
+        if (medium.getId() == null) {
+            medium.setId(getFirstFreeId());
+        }
         String mediumQuery = "<medium id='" + medium.getId() + "'>" +
                 "<mediumType>" + medium.getMediumType().toString() + "</mediumType>" +
                 "<name>" + medium.getName() + "</name>" +
@@ -120,7 +123,7 @@ public class XMLDBManagerImpl implements XMLDBManager{
 
         try {
             CompiledExpression compiledExpression = xQueryService.compile("update insert " + mediumQuery +
-                    " into doc('database.xml')/videoLibrary/categories/category[@name='" + medium.getCategory() + "']");
+                    " into doc('database.xml')/videoLibrary/categories/category[@name='" + medium.getCategory().getName() + "']");
             xQueryService.execute(compiledExpression);
         } catch (XMLDBException ex) {
             ex.printStackTrace();
@@ -158,17 +161,17 @@ public class XMLDBManagerImpl implements XMLDBManager{
     }
 
     public String findMediumById(String mediumId) {
-        String xpath =
+        String xquery =
         "for $medium in doc('database.xml')/videoLibrary/categories/category/medium[@id = '"+mediumId+"'] " +
         "return $medium";
-        return findMedium(xpath);
+        return findMedium(xquery);
     }
 
     public String findMediumByName(String mediumName) {
-        String xpath =
+        String xquery =
                 "for $medium in doc('database.xml')/videoLibrary/categories/category/medium[name = '"+mediumName+"'] " +
                         "return $medium";
-        return findMedium(xpath);
+        return findMedium(xquery);
     }
 
     private String findMedium(String xpathToMedium) {
@@ -261,6 +264,62 @@ public class XMLDBManagerImpl implements XMLDBManager{
             ex.printStackTrace();
         }
         return mediums;
+    }
+
+    public void importIntoDatabase(Map<Category, Set<Medium>> categoryMap) {
+        for (Map.Entry<Category, Set<Medium>> entry : categoryMap.entrySet()) {
+            if (!categoryExist(entry.getKey())){
+                createCategory(entry.getKey());
+            }
+            for (Medium medium:
+                    entry.getValue()) {
+                if (!mediumExist(medium)) {
+                    createMedium(medium);
+                }
+            }
+        }
+    }
+
+    public boolean categoryExist(Category category) {
+        String xquery =
+                "boolean(doc('database.xml')/videoLibrary/categories/category[@name='" + category.getName() + "'])";
+        return exist(xquery);
+    }
+
+    public boolean mediumExist(Medium medium) {
+        String xquery =
+                "boolean(doc('database.xml')/videoLibrary/categories/category/medium[@id='"+medium.getId().toString()+"'])";
+        return exist(xquery);
+    }
+
+    private boolean exist(String xquery) {
+        String contains = "false";
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile(xquery);
+            ResourceSet result = xQueryService.execute(compiledExpression);
+            ResourceIterator i = result.getIterator();
+            Resource res = null;
+            if (i.hasMoreResources()) {
+                try {
+                    res = i.nextResource();
+                    contains = ((String) res.getContent());
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
+        }
+
+        if (contains.equals("true")) {
+            return true;
+        }
+
+        return false;
     }
 
 }
