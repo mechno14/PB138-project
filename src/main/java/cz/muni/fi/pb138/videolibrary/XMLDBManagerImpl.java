@@ -12,8 +12,12 @@ import org.xmldb.api.modules.XQueryService;
 
 import java.util.*;
 
+/**
+ * @author Denis Hambalek
+ */
+
 @Component
-public class NativeXMLDatabaseManager {
+public class XMLDBManagerImpl implements XMLDBManager{
 
     private static final String DRIVER = "org.exist.xmldb.DatabaseImpl";
     private final static String URI = "xmldb:exist://localhost:8080/exist/xmlrpc";
@@ -25,7 +29,7 @@ public class NativeXMLDatabaseManager {
     private final XQueryService xQueryService;
 
 
-    public NativeXMLDatabaseManager() throws Exception {
+    public XMLDBManagerImpl() throws Exception {
         Class cl = Class.forName(DRIVER);
         Database database = (Database) cl.newInstance();
         database.setProperty("create-database", "true");
@@ -183,12 +187,6 @@ public class NativeXMLDatabaseManager {
             ex.printStackTrace();
         }
         return medium;
-    }
-
-    public void moveMediumToDifferentCategory(Medium medium) {
-        String mediumQuery = findMediumById(medium.getId().toString());
-        deleteMedium(medium.getId().toString());
-        addMediumToCategory(mediumQuery, medium.getCategory().getName());
     }
 
     public Set<Category> findAllCategories() {

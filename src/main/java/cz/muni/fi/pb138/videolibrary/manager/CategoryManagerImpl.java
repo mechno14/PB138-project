@@ -1,19 +1,18 @@
 package cz.muni.fi.pb138.videolibrary.manager;
 
-import cz.muni.fi.pb138.videolibrary.NativeXMLDatabaseManager;
+import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
 public class CategoryManagerImpl implements CategoryManager {
 
     //@Autowired
-    NativeXMLDatabaseManager databaseManager;
+    XMLDBManagerImpl databaseManager;
 
-    public CategoryManagerImpl(NativeXMLDatabaseManager databaseManager) {
+    public CategoryManagerImpl(XMLDBManagerImpl databaseManager) {
         this.databaseManager = databaseManager;
     }
 
