@@ -1,12 +1,17 @@
 package tests.cz.muni.fi.pb138.videolibary.classes;
 
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
+import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
+import cz.muni.fi.pb138.videolibrary.entity.MediumType;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManagerImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.time.Year;
+import java.util.HashSet;
 
 public class MediumManagerImplTest {
 
@@ -15,8 +20,12 @@ public class MediumManagerImplTest {
 
     private MediumBuilder medium42Untouchables() {
         return new MediumBuilder()
-                .id((long) 42)
-                .name("Untouchables");
+                .name("Untouchables")
+                .releaseYear(Year.of(1995))
+                .category(new Category("Movies"))
+                .mediumType(MediumType.DVD)
+                .actors(new HashSet<>())
+                .genres(new HashSet<>());
     }
 
     @Test
@@ -93,7 +102,7 @@ public class MediumManagerImplTest {
     @Test
     void createMediumWithNullId() {
         Medium medium = new MediumBuilder().id(null).build();
-        Assertions.assertThrows(IllegalEntityException.class, ()-> {
+        Assertions.assertThrows(EntityValidationException.class, ()-> {
             manager.createMedium(medium);
         });
     }
@@ -173,7 +182,7 @@ public class MediumManagerImplTest {
     @Test
     void deleteMediumWithNullId() {
         Medium medium = new MediumBuilder().id(null).build();
-        Assertions.assertThrows(IllegalEntityException.class, ()-> {
+        Assertions.assertThrows(EntityValidationException.class, ()-> {
             manager.deleteMedium(medium);
         });
     }

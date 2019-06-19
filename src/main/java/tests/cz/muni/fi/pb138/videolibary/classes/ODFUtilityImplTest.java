@@ -48,17 +48,17 @@ public class ODFUtilityImplTest {
     @Test
     void transformInvalidFile() {
         Assertions.assertThrows(IllegalArgumentException.class, () ->  {
-            odf.transformToSet(odf.readFile("../testfiles/invalid_ODF.ods"));
+            odf.transformToSet(odf.readFile("src/main/java/tests/cz/muni/fi/pb138/videolibary/testfiles/invalid_ODF.ods"));
         });
     }
 
     @Test
     void transformValidFile() throws IOException {
-        Assertions.assertNotNull(odf.transformToSet(odf.readFile("../testfiles/valid_ODF.ods")));
+        Assertions.assertNotNull(odf.transformToSet(odf.readFile("src/main/java/tests/cz/muni/fi/pb138/videolibary/testfiles/valid_ODF.ods")));
     }
     @Test
     void readValidFile() throws IOException {
-        Assertions.assertNotNull(odf.readFile("../testfiles/valid_ODF.ods"));
+        Assertions.assertNotNull(odf.readFile("src/main/java/tests/cz/muni/fi/pb138/videolibary/testfiles/valid_ODF.ods"));
     }
 
     @Test
