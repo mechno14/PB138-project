@@ -14,6 +14,7 @@ import java.util.Set;
 
 public class Main {
     public static void main(String args[]) throws Exception {
+        /*
         XMLDBManagerImpl db = new XMLDBManagerImpl();
 
         db.addMediumToCategory("<medium id=\""+ db.getFirstFreeId() +"\"><mediumType>DVD</mediumType>\n" +
@@ -64,13 +65,13 @@ public class Main {
         //Medium med = xm.readValues(db.findMediumById("1"), Medium.class);
 
         db.close();
+        */
 
-        /*
         XMLDBManagerImpl db = new XMLDBManagerImpl();
         CategoryManager categoryManager = new CategoryManagerImpl(db);
         Set<Category> categories = categoryManager.findAllCategories();
         for (Category category : categories) {
             System.out.println(category.getName());
-        }*/
+        }
     }
 }
