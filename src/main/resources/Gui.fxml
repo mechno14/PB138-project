@@ -11,11 +11,12 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.TextField?>
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="cz.muni.fi.pb138.videolibrary.gui.Controller">
   <children>
     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
       <children>
-            <ImageView disable="true" fitHeight="873.0" fitWidth="1109.0" layoutX="-4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView disable="true" fitHeight="873.0" fitWidth="1109.0" layoutX="-4.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                <image>
                   <Image url="@1.uvod.jpg" />
                </image>
@@ -42,15 +43,6 @@
             </ImageView>
             <Button id="#fa" layoutX="777.0" layoutY="190.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" style="-fx-cursor: hand;" text="Search by title" textFill="RED" />
             <TextField  layoutX="555.0" layoutY="179.0" prefHeight="26.0" prefWidth="214.0" />
-            <Button layoutX="555.0" layoutY="701.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="132.0">
-               <graphic>
-                  <ImageView fitHeight="59.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@EXPORT.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
             <TableView editable="true" layoutX="555.0" layoutY="246.0" opacity="0.85" prefHeight="142.0" prefWidth="318.0" style="-fx-background-color: #f44336; -fx-border-color: #f44336;">
               <columns>
                 <TableColumn prefWidth="162.4000244140625" text="Name:" />
@@ -58,7 +50,7 @@
               </columns>
             </TableView>
             <Button id="#button" layoutX="415.0" layoutY="190.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="59.0" style="-fx-background-color: #f44336; -fx-cursor: hand;" text="Show" textFill="WHITE" />
-            <Button layoutX="555.0" layoutY="435.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="132.0" style="-fx-cursor: hand;" text="+ Add medium" textFill="RED">
+            <Button layoutX="555.0" layoutY="417.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="132.0" style="-fx-cursor: hand;" text="+ Add medium" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
@@ -81,6 +73,24 @@
                <font>
                   <Font size="14.0" />
                </font>
+            </Button>
+            <Button layoutX="555.0" layoutY="701.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="318.0">
+               <graphic>
+                  <ImageView fitHeight="59.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@EXPORT.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="555.0" layoutY="652.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="318.0" style="-fx-cursor: hand;">
+               <graphic>
+                  <ImageView fitHeight="59.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@IMPORT.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
       </children>
     </AnchorPane>

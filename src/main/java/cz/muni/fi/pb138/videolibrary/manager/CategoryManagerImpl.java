@@ -4,13 +4,11 @@ import cz.muni.fi.pb138.videolibrary.NativeXMLDatabaseManager;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
 public class CategoryManagerImpl implements CategoryManager {
 
-    @Autowired
     NativeXMLDatabaseManager databaseManager;
 
 

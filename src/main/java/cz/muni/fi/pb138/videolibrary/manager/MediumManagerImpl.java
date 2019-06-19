@@ -4,13 +4,11 @@ import cz.muni.fi.pb138.videolibrary.NativeXMLDatabaseManager;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
 public class MediumManagerImpl implements MediumManager {
 
-    @Autowired
     NativeXMLDatabaseManager databaseManager;
 
     private void validate(Medium medium) {
@@ -58,7 +56,8 @@ public class MediumManagerImpl implements MediumManager {
         if (id == null)
             throw new IllegalArgumentException("Id cannot be null");
 
-        return databaseManager.findMediumById(id);
+        //return databaseManager.findMediumById(id);
+        return null;
     }
 
     @Override
@@ -66,7 +65,8 @@ public class MediumManagerImpl implements MediumManager {
         if (name == null || name.isEmpty())
             throw new IllegalArgumentException("Name cannot be null or empty.");
 
-        return databaseManager.findMediumByName(name);
+        //return databaseManager.findMediumByName(name);
+        return null;
     }
 
 }

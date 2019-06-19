@@ -4,7 +4,6 @@ import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import org.exist.xmldb.EXistResource;
-import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.base.Collection;
@@ -12,7 +11,6 @@ import org.xmldb.api.modules.XQueryService;
 
 import java.util.*;
 
-@Component
 public class NativeXMLDatabaseManager {
 
     private static final String DRIVER = "org.exist.xmldb.DatabaseImpl";
