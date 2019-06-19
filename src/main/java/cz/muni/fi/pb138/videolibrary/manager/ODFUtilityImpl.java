@@ -114,10 +114,13 @@ public class ODFUtilityImpl implements ODFUtility {
         if (mediumType.equals("DVD")) {
             return MediumType.DVD;
         }
-        if (mediumType.equals("DVD")) {
+        if (mediumType.equals("VHS")) {
             return MediumType.VHS;
         }
-        return MediumType.USB;
+        if (mediumType.equals("USB")) {
+            return MediumType.USB;
+        } else {
+            throw new IllegalArgumentException("uknown medium type");}
     }
 
 
