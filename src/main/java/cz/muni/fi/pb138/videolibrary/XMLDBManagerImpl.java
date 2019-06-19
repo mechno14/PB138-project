@@ -4,7 +4,6 @@ import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import org.exist.xmldb.EXistResource;
-import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.base.Collection;
@@ -12,12 +11,16 @@ import org.xmldb.api.modules.XQueryService;
 
 import java.util.*;
 
+<<<<<<< HEAD:src/main/java/cz/muni/fi/pb138/videolibrary/XMLDBManagerImpl.java
 /**
  * @author Denis Hambalek
  */
 
 @Component
 public class XMLDBManagerImpl implements XMLDBManager{
+=======
+public class NativeXMLDatabaseManager {
+>>>>>>> GUI:src/main/java/cz/muni/fi/pb138/videolibrary/NativeXMLDatabaseManager.java
 
     private static final String DRIVER = "org.exist.xmldb.DatabaseImpl";
     private final static String URI = "xmldb:exist://localhost:8080/exist/xmlrpc";

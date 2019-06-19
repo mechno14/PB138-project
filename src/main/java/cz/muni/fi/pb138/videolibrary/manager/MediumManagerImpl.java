@@ -4,6 +4,7 @@ import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
+<<<<<<< HEAD
 
 public class MediumManagerImpl implements MediumManager {
 
@@ -13,6 +14,14 @@ public class MediumManagerImpl implements MediumManager {
     public MediumManagerImpl(XMLDBManagerImpl databaseManager) {
         this.databaseManager = databaseManager;
     }
+=======
+
+import java.util.Set;
+
+public class MediumManagerImpl implements MediumManager {
+
+    NativeXMLDatabaseManager databaseManager;
+>>>>>>> GUI
 
     private void validate(Medium medium) {
         if (medium == null)
