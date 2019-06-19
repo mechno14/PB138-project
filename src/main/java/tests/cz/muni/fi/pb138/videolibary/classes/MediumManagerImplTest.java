@@ -5,18 +5,16 @@ import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.entity.MediumType;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
-import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManagerImpl;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Year;
 import java.util.HashSet;
 
 public class MediumManagerImplTest {
 
-    private XMLDBManagerImpl xmldbManager;
-    private MediumManagerImpl manager = new MediumManagerImpl(xmldbManager);
+    private MediumManagerImpl manager;
 
     private MediumBuilder medium42Untouchables() {
         return new MediumBuilder()
@@ -26,6 +24,12 @@ public class MediumManagerImplTest {
                 .mediumType(MediumType.DVD)
                 .actors(new HashSet<>())
                 .genres(new HashSet<>());
+    }
+
+    @BeforeEach
+    void setXmlDBManager() throws Exception {
+        XMLDBManagerImpl xmlDBManager = new XMLDBManagerImpl();
+        manager =  new MediumManagerImpl(xmlDBManager);
     }
 
     @Test
@@ -181,17 +185,19 @@ public class MediumManagerImplTest {
     @Test
     void findMediumById() {
         Medium medium = medium42Untouchables().build();
+        Long id = medium.getId();
         manager.createMedium(medium);
-        Assertions.assertTrue(manager.findMediumById((long)42).getName().equals("Untouchables"));
+        Assertions.assertTrue(manager.findMediumById(id).getName().equals("Untouchables"));
     }
 
     @Test
     void removeMedium() {
         Medium medium = medium42Untouchables().build();
+        Long id = medium.getId();
         manager.createMedium(medium);
-        Assertions.assertTrue(manager.findMediumById((long)42) != null);
+        Assertions.assertTrue(manager.findMediumById(id) != null);
         manager.deleteMedium(medium);
-        Assertions.assertTrue(manager.findMediumById((long)42) == null);
+        Assertions.assertTrue(manager.findMediumById(id) == null);
     }
 
     @Test
@@ -211,8 +217,9 @@ public class MediumManagerImplTest {
     @Test
     void findMediumByName() {
         Medium medium = medium42Untouchables().build();
+        Long id = medium.getId();
         manager.createMedium(medium);
-        Assertions.assertTrue(manager.findMediumByName("Untouchables").getId().equals((long)42));
+        Assertions.assertTrue(manager.findMediumByName("Untouchables").getId().equals(id));
     }
 
 
