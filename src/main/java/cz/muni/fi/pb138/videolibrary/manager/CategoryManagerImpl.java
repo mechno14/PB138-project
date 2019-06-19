@@ -9,18 +9,10 @@ import java.util.Set;
 
 public class CategoryManagerImpl implements CategoryManager {
 
-<<<<<<< HEAD
-    //@Autowired
-    XMLDBManagerImpl databaseManager;
-=======
-    NativeXMLDatabaseManager databaseManager;
->>>>>>> GUI
+    private XMLDBManagerImpl databaseManager;
 
-<<<<<<< HEAD
     public CategoryManagerImpl(XMLDBManagerImpl databaseManager) {
-=======
-    public CategoryManagerImpl(NativeXMLDatabaseManager databaseManager) {
->>>>>>> GUI
+
         this.databaseManager = databaseManager;
     }
 

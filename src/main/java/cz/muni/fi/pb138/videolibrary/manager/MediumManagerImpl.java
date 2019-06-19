@@ -1,34 +1,20 @@
 package cz.muni.fi.pb138.videolibrary.manager;
 
-<<<<<<< HEAD
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
-=======
-import cz.muni.fi.pb138.videolibrary.NativeXMLDatabaseManager;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
->>>>>>> GUI
+
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
-<<<<<<< HEAD
-
-public class MediumManagerImpl implements MediumManager {
-
-    //@Autowired
-    XMLDBManagerImpl databaseManager;
-
-    public MediumManagerImpl(XMLDBManagerImpl databaseManager) {
-        this.databaseManager = databaseManager;
-    }
-=======
 
 import java.util.Set;
 
 public class MediumManagerImpl implements MediumManager {
 
-    NativeXMLDatabaseManager databaseManager;
->>>>>>> GUI
 
-    public MediumManagerImpl(NativeXMLDatabaseManager databaseManager) {
+    private XMLDBManagerImpl databaseManager;
+
+    public MediumManagerImpl(XMLDBManagerImpl databaseManager) {
         this.databaseManager = databaseManager;
     }
 

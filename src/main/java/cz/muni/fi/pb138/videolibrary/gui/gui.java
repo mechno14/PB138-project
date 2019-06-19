@@ -1,6 +1,7 @@
 package cz.muni.fi.pb138.videolibrary.gui;
 
-import cz.muni.fi.pb138.videolibrary.NativeXMLDatabaseManager;
+import cz.muni.fi.pb138.videolibrary.XMLDBManager;
+import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
@@ -59,7 +60,7 @@ public class gui {
         String column_names[]= {"Name","Genre","Year","Type"};
         TableModel table_model=new DefaultTableModel(column_names,4);
         table1 = new JTable(table_model);
-        NativeXMLDatabaseManager nativeXMLDatabaseManager = new NativeXMLDatabaseManager();
+        XMLDBManagerImpl nativeXMLDatabaseManager = new XMLDBManagerImpl();
         categoryManager = new CategoryManagerImpl(nativeXMLDatabaseManager);
         mediumManager = new MediumManagerImpl(nativeXMLDatabaseManager);
         System.out.println("ssssssssssssssss");

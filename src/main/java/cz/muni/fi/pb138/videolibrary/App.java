@@ -1,24 +1,18 @@
 package cz.muni.fi.pb138.videolibrary;
 
-<<<<<<< HEAD:src/main/java/cz/muni/fi/pb138/videolibrary/Main.java
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-=======
 import javafx.application.Application;
->>>>>>> GUI:src/main/java/cz/muni/fi/pb138/videolibrary/App.java
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.entity.MediumType;
-<<<<<<< HEAD:src/main/java/cz/muni/fi/pb138/videolibrary/Main.java
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
-=======
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
->>>>>>> GUI:src/main/java/cz/muni/fi/pb138/videolibrary/App.java
 
 import java.io.File;
 import java.net.URL;
@@ -28,6 +22,7 @@ import java.util.Set;
 
 public class App {
     public static void main(String args[]) throws Exception {
+        /*
 <<<<<<< HEAD:src/main/java/cz/muni/fi/pb138/videolibrary/Main.java
         /*
         XMLDBManagerImpl db = new XMLDBManagerImpl();
@@ -98,6 +93,7 @@ public class App {
         db.close();
         */
 
+        /*
         XMLDBManagerImpl db = new XMLDBManagerImpl();
         CategoryManager categoryManager = new CategoryManagerImpl(db);
         Set<Category> categories = categoryManager.findAllCategories();
@@ -105,9 +101,10 @@ public class App {
             System.out.println(category.getName());
         }
 =======
-        db.close();*/
+        db.close();*//*
 >>>>>>> GUI:src/main/java/cz/muni/fi/pb138/videolibrary/App.java
-    }
+
+    }*/
 /*
     @Override
     public void start(Stage primaryStage) throws Exception {*/
@@ -129,5 +126,6 @@ public class App {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
-    }*/
+    */
+    }
 }
