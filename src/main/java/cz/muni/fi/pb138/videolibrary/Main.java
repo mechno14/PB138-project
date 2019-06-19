@@ -1,5 +1,6 @@
 package cz.muni.fi.pb138.videolibrary;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
@@ -54,7 +55,13 @@ public class Main {
 
         System.out.println(db.getFirstFreeId());
 
+        Category cat = new Category("Movies");
+
         System.out.println(db.findMediumById("1"));
+        System.out.println(db.findMediumByName("HERK"));
+
+        XmlMapper xm = new XmlMapper();
+        //Medium med = xm.readValues(db.findMediumById("1"), Medium.class);
 
         db.close();
 

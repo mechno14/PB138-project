@@ -161,15 +161,15 @@ public class XMLDBManagerImpl implements XMLDBManager{
 
     public String findMediumById(String mediumId) {
         String xpath =
-                "for $category in doc('database.xml')/videoLibrary/categories/category " +
-                        "return data($category/medium[id='" + mediumId + "'])";
+        "for $medium in doc('database.xml')/videoLibrary/categories/category/medium[@id = '"+mediumId+"'] " +
+        "return $medium";
         return findMedium(xpath);
     }
 
     public String findMediumByName(String mediumName) {
         String xpath =
-                "for $category in doc('database.xml')/videoLibrary/categories/category " +
-                        "return data($category/medium/name/text()='" + mediumName + "')";
+                "for $medium in doc('database.xml')/videoLibrary/categories/category/medium[name = '"+mediumName+"'] " +
+                        "return $medium";
         return findMedium(xpath);
     }
 
@@ -263,10 +263,6 @@ public class XMLDBManagerImpl implements XMLDBManager{
             ex.printStackTrace();
         }
         return mediums;
-    }
-
-    private void test() {
-
     }
 
 }
