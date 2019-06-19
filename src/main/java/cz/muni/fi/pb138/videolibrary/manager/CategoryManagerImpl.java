@@ -16,7 +16,11 @@ public class CategoryManagerImpl implements CategoryManager {
     NativeXMLDatabaseManager databaseManager;
 >>>>>>> GUI
 
+<<<<<<< HEAD
     public CategoryManagerImpl(XMLDBManagerImpl databaseManager) {
+=======
+    public CategoryManagerImpl(NativeXMLDatabaseManager databaseManager) {
+>>>>>>> GUI
         this.databaseManager = databaseManager;
     }
 
