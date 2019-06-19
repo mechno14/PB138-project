@@ -6,15 +6,20 @@ import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
 
 public class CategoryManagerImplTest {
-    XMLDBManagerImpl xmlDBManager;
+    private XMLDBManagerImpl xmlDBManager;
     private CategoryManagerImpl manager = new CategoryManagerImpl(xmlDBManager);
 
+    @BeforeEach
+    void setXmlDBManager() throws Exception {
+        xmlDBManager = new XMLDBManagerImpl();
+    }
     private CategoryBuilder categoryDocumentaries() {
         return new CategoryBuilder()
                 .name("Documentaries");
@@ -33,7 +38,7 @@ public class CategoryManagerImplTest {
 
     @Test
     void createCategoryWithNull() {
-        Assertions.assertThrows(IllegalAccessException.class,()-> {
+        Assertions.assertThrows(IllegalArgumentException.class,()-> {
             manager.createCategory(null);
         });
     }
@@ -78,16 +83,12 @@ public class CategoryManagerImplTest {
         });
     }
 
-    void addTwoCategories(){
+    @Test
+    void findAllCathegories() {
         Category category1 = categoryDocumentaries().build();
         Category category2 = categoryMovies().build();
         manager.createCategory(category1);
         manager.createCategory(category2);
-    }
-
-    @Test
-    void findAllCathegories() {
-        addTwoCategories();
         Set<Category> allCategories = manager.findAllCategories();
         Assertions.assertTrue(allCategories.size() == 2);
         Assertions.assertTrue(allCategories.contains(categoryDocumentaries().build()));
@@ -96,7 +97,10 @@ public class CategoryManagerImplTest {
 
     @Test
     void deleteCathegory() {
-        addTwoCategories();
+        Category category1 = categoryDocumentaries().build();
+        Category category2 = categoryMovies().build();
+        manager.createCategory(category1);
+        manager.createCategory(category2);
         Set<Category> allCategories = manager.findAllCategories();
         Assertions.assertTrue(allCategories.size() == 2);
         manager.deleteCategory(categoryDocumentaries().build());
