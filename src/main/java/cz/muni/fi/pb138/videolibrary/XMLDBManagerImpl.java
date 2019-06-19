@@ -143,16 +143,6 @@ public class XMLDBManagerImpl implements XMLDBManager{
         }
     }
 
-    public void addMediumToCategory(String mediumQuery, String category) {
-        try {
-            CompiledExpression compiledExpression = xQueryService.compile("update insert " + mediumQuery +
-                    " into doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']");
-            xQueryService.execute(compiledExpression);
-        } catch (XMLDBException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public void deleteMedium(Medium medium) {
         try {
             CompiledExpression compiledExpression = xQueryService.compile(
@@ -163,6 +153,17 @@ public class XMLDBManagerImpl implements XMLDBManager{
             ex.printStackTrace();
         }
     }
+
+    public void addMediumToCategory(String mediumQuery, String category) {
+        try {
+            CompiledExpression compiledExpression = xQueryService.compile("update insert " + mediumQuery +
+                    " into doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']");
+            xQueryService.execute(compiledExpression);
+        } catch (XMLDBException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     public String findMediumById(String mediumId) {
         String xpath =
@@ -226,28 +227,7 @@ public class XMLDBManagerImpl implements XMLDBManager{
                         "{for $medium in doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']/medium " +
                         "return $medium}" +
                         "</mediums>";
-        String mediums = "";
-        try {
-            CompiledExpression compiledExpression = xQueryService.compile(xpath);
-            ResourceSet result = xQueryService.execute(compiledExpression);
-            ResourceIterator i = result.getIterator();
-            Resource res = null;
-            while (i.hasMoreResources()) {
-                try {
-                    res = i.nextResource();
-                    mediums = ((String) res.getContent());
-                } finally {
-                    try {
-                        ((EXistResource) res).freeResources();
-                    } catch (XMLDBException xe) {
-                        xe.printStackTrace();
-                    }
-                }
-            }
-        } catch (XMLDBException ex) {
-            ex.printStackTrace();
-        }
-        return mediums;
+        return xPathCaller(xpath);
     }
 
     public void importIntoDatabase(Map<Category, Set<Medium>> categoryMap) {
@@ -267,13 +247,21 @@ public class XMLDBManagerImpl implements XMLDBManager{
     public boolean categoryExist(Category category) {
         String xquery =
                 "boolean(doc('database.xml')/videoLibrary/categories/category[@name='" + category.getName() + "'])";
-        return exist(xquery);
+        String result = xQueryCaller(xquery);
+        if (result.equals("true")) {
+            return true;
+        }
+        return false;
     }
 
     public boolean mediumExist(Medium medium) {
         String xquery =
                 "boolean(doc('database.xml')/videoLibrary/categories/category/medium[@id='"+medium.getId().toString()+"'])";
-        return exist(xquery);
+        String result = xQueryCaller(xquery);
+        if (result.equals("true")) {
+            return true;
+        }
+        return false;
     }
 
     private String xPathCaller(String xpath) {
@@ -324,35 +312,4 @@ public class XMLDBManagerImpl implements XMLDBManager{
         }
         return output;
     }
-
-    private boolean exist(String xquery) {
-        String contains = "false";
-        try {
-            CompiledExpression compiledExpression = xQueryService.compile(xquery);
-            ResourceSet result = xQueryService.execute(compiledExpression);
-            ResourceIterator i = result.getIterator();
-            Resource res = null;
-            if (i.hasMoreResources()) {
-                try {
-                    res = i.nextResource();
-                    contains = ((String) res.getContent());
-                } finally {
-                    try {
-                        ((EXistResource) res).freeResources();
-                    } catch (XMLDBException xe) {
-                        xe.printStackTrace();
-                    }
-                }
-            }
-        } catch (XMLDBException ex) {
-            ex.printStackTrace();
-        }
-
-        if (contains.equals("true")) {
-            return true;
-        }
-
-        return false;
-    }
-
 }
