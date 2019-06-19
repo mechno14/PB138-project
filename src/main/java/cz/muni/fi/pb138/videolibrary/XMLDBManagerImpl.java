@@ -244,6 +244,11 @@ public class XMLDBManagerImpl implements XMLDBManager{
         }
     }
 
+    public String exportQueryFromDatabase() {
+        String xpath = "doc('database.xml')/videoLibrary/categories";
+        return xPathCaller(xpath);
+    }
+
     public boolean categoryExist(Category category) {
         String xquery =
                 "boolean(doc('database.xml')/videoLibrary/categories/category[@name='" + category.getName() + "'])";

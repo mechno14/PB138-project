@@ -99,4 +99,10 @@ public interface XMLDBManager {
      * @param categoryMap data to be imported
      */
     public void importIntoDatabase(Map<Category, Set<Medium>> categoryMap);
+
+    /**
+     * Exports query from database.
+     * @return exported query from database
+     */
+    public String exportQueryFromDatabase();
 }
