@@ -41,6 +41,12 @@ public interface XMLDBManager {
     public void createMedium(Medium medium);
 
     /**
+     * Delete Medium by specified ID.
+     * @param mediumId ID of medium to be deleted
+     */
+    public void deleteMedium(String mediumId);
+
+    /**
      * Creates new Medium with medium query in explicite specified Category in database.
      * @param mediumQuery to be created in database
      * @param category to be created in
@@ -72,12 +78,6 @@ public interface XMLDBManager {
      * @return Set of Names of categories.
      */
     public Set<Category> findAllCategories();
-
-    /**
-     * Delete Medium by specified ID.
-     * @param mediumId ID of medium to be deleted
-     */
-    public void deleteMedium(String mediumId);
 
     /**
      * Finds all Mediums in given Category

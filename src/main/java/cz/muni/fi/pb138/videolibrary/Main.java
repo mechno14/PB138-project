@@ -1,14 +1,19 @@
 package cz.muni.fi.pb138.videolibrary;
 
 import cz.muni.fi.pb138.videolibrary.entity.Category;
+import cz.muni.fi.pb138.videolibrary.entity.Genre;
+import cz.muni.fi.pb138.videolibrary.entity.Medium;
+import cz.muni.fi.pb138.videolibrary.entity.MediumType;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 
+import java.time.Year;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Main {
-    public static void main(String args[]) throws Exception {/*
-        NativeXMLDatabaseManager db = new NativeXMLDatabaseManager();
+    public static void main(String args[]) throws Exception {
+        XMLDBManagerImpl db = new XMLDBManagerImpl();
 
         db.addMediumToCategory("<medium id=\""+ db.getFirstFreeId() +"\"><mediumType>DVD</mediumType>\n" +
                 "                <name>HERK</name>\n" +
@@ -51,13 +56,14 @@ public class Main {
 
         System.out.println(db.findMediumById("1"));
 
-        db.close();*/
+        db.close();
 
+        /*
         XMLDBManagerImpl db = new XMLDBManagerImpl();
         CategoryManager categoryManager = new CategoryManagerImpl(db);
         Set<Category> categories = categoryManager.findAllCategories();
         for (Category category : categories) {
             System.out.println(category.getName());
-        }
+        }*/
     }
 }
