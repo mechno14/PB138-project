@@ -1,5 +1,6 @@
 package tests.cz.muni.fi.pb138.videolibary.classes;
 
+import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
@@ -9,7 +10,8 @@ import org.junit.jupiter.api.Test;
 
 public class MediumManagerImplTest {
 
-    private MediumManagerImpl manager = new MediumManagerImpl();
+    private XMLDBManagerImpl xmldbManager;
+    private MediumManagerImpl manager = new MediumManagerImpl(xmldbManager);
 
     private MediumBuilder medium42Untouchables() {
         return new MediumBuilder()
