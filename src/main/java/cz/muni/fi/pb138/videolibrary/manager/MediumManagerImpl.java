@@ -33,9 +33,6 @@ public class MediumManagerImpl implements MediumManager {
         if (medium == null)
             throw new IllegalArgumentException("Medium cannot be null.");
 
-        System.out.println(medium.getName() + medium.getMediumType() + medium.getCategory()
-        + medium.getActors() + medium.getGenres());
-
         if (medium.getName() == null ||
                 medium.getMediumType() == null ||
                 medium.getCategory() == null ||
@@ -197,6 +194,8 @@ public class MediumManagerImpl implements MediumManager {
                         medium.setGenres(new HashSet<>());
                     if (medium.getActors() == null)
                         medium.setActors(new HashSet<>());
+                    medium.setCategory
+                            (new Category(doc.getElementsByTagName("category").item(0).getTextContent()));
                     media.add(medium);
                 }
                 catch (JAXBException e)

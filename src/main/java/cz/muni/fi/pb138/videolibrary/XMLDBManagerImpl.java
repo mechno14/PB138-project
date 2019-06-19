@@ -235,7 +235,7 @@ public class XMLDBManagerImpl implements XMLDBManager{
 
     public String findAllMediumsByCategory(String category) {
         String xpath =
-                "<mediums>" +
+                "<mediums><category>" + category + "</category>" +
                         "{for $medium in doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']/medium " +
                         "return $medium}" +
                         "</mediums>";

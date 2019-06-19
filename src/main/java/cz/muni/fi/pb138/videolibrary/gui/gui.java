@@ -24,6 +24,7 @@ public class gui {
     private JButton deleteButton;
     private JTextField textField1;
     private JButton addCategoryButton;
+    private JButton addMediumButton;
 
     private CategoryManager categoryManager;
     private MediumManager mediumManager;
@@ -50,6 +51,13 @@ public class gui {
             public void actionPerformed(ActionEvent e) {
                 TableModel tableModel = (TableModel) table1.getModel();
                 tableModel.removeRow(table1.getSelectedRow());
+            }
+        });
+        addMediumButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
             }
         });
     }
