@@ -1,6 +1,5 @@
 package cz.muni.fi.pb138.videolibrary;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import javafx.application.Application;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;

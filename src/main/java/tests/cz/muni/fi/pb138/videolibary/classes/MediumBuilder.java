@@ -21,7 +21,7 @@ public class MediumBuilder {
     private Category category;
     private Set<String> actors;
     private Set<Genre> genres;
-    private Year releaseYear;
+    private int releaseYear;
 
     public MediumBuilder id(Long id) {
         this.id = id;
@@ -58,7 +58,7 @@ public class MediumBuilder {
         return this;
     }
 
-    public MediumBuilder releaseYear(Year releaseYear) {
+    public MediumBuilder releaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
         return this;
     }

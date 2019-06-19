@@ -93,13 +93,13 @@ public class ODFUtilityImpl implements ODFUtility {
         int length = row.getCellByIndex(3).getDoubleValue().intValue();
 
         //Set<String> actors = new HashSet<>(Arrays.asList(row.getCellByIndex(2).getDisplayText().split(";")));
-        Year releaseYear = Year.of(row.getCellByIndex(4).getDoubleValue().intValue());
+        int releaseYear = Integer.parseInt(row.getCellByIndex(4).getDisplayText());
         Category category = new Category(categoryName);
 
         return mediumConstructor(id, name, mediumType, length, category, releaseYear);
     }
 
-    private static Medium mediumConstructor(Long id, String name, MediumType mediumType, int length, Category category, Year releaseYear) {
+    private static Medium mediumConstructor(Long id, String name, MediumType mediumType, int length, Category category, int releaseYear) {
         Medium medium = new Medium();
         medium.setId(id);
         medium.setLength(length);
@@ -166,7 +166,7 @@ public class ODFUtilityImpl implements ODFUtility {
         row.getCellByIndex(0).setFormatString("0");
         row.getCellByIndex(3).setDisplayText(Integer.toString(medium.getLength()));
         row.getCellByIndex(4).setFormatString("0");
-        row.getCellByIndex(4).setDisplayText(Integer.toString(medium.getReleaseYear().getValue()));
+        row.getCellByIndex(4).setDisplayText(Integer.toString(medium.getReleaseYear()));
 
     }
 }

@@ -115,7 +115,7 @@ public class XMLDBManagerImpl implements XMLDBManager{
             mediumQuery += "<genre>" + genre.toString() + "</genre>";
         }
 
-        mediumQuery += "</genres><releaseYear>" + medium.getReleaseYear().toString()
+        mediumQuery += "</genres><releaseYear>" + medium.getReleaseYear()
                 + "</releaseYear></medium>";
 
         try {

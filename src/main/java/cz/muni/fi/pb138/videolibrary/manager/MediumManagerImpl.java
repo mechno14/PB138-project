@@ -26,8 +26,7 @@ public class MediumManagerImpl implements MediumManager {
                 medium.getMediumType() == null ||
                 medium.getCategory() == null ||
                 medium.getActors() == null ||
-                medium.getGenres() == null ||
-                medium.getReleaseYear() == null)
+                medium.getGenres() == null)
             throw new EntityValidationException("Entity has null attribute(s).");
 
         if (medium.getLength() < 0)
@@ -35,6 +34,9 @@ public class MediumManagerImpl implements MediumManager {
 
         if (medium.getName().isEmpty())
             throw new EntityValidationException("Name cannot be empty.");
+
+        if (medium.getReleaseYear() < 1900)
+            throw new EntityValidationException("Wrong year.");
     }
 
     @Override

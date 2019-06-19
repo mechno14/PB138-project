@@ -21,7 +21,7 @@ public class MediumManagerImplTest {
     private MediumBuilder medium42Untouchables() {
         return new MediumBuilder()
                 .name("Untouchables")
-                .releaseYear(Year.of(1995))
+                .releaseYear(1995)
                 .category(new Category("Movies"))
                 .mediumType(MediumType.DVD)
                 .actors(new HashSet<>())
@@ -70,14 +70,6 @@ public class MediumManagerImplTest {
     @Test
     void createMediumWithNullGenres() {
         Medium medium = new MediumBuilder().genres(null).build();
-        Assertions.assertThrows(EntityValidationException.class, ()-> {
-            manager.createMedium(medium);
-        });
-    }
-
-    @Test
-    void createMediumWithNullReleaseYear() {
-        Medium medium = new MediumBuilder().releaseYear(null).build();
         Assertions.assertThrows(EntityValidationException.class, ()-> {
             manager.createMedium(medium);
         });
@@ -150,14 +142,6 @@ public class MediumManagerImplTest {
     @Test
     void deleteMediumWithNullGenres() {
         Medium medium = new MediumBuilder().genres(null).build();
-        Assertions.assertThrows(EntityValidationException.class, ()-> {
-            manager.deleteMedium(medium);
-        });
-    }
-
-    @Test
-    void deleteMediumWithNullReleaseYear() {
-        Medium medium = new MediumBuilder().releaseYear(null).build();
         Assertions.assertThrows(EntityValidationException.class, ()-> {
             manager.deleteMedium(medium);
         });

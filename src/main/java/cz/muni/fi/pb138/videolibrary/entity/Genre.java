@@ -17,12 +17,7 @@ public enum Genre {
     Mystery,
     Political,
     Romance,
-    ScienceFiction {
-        @Override
-        public String toString() {
-            return "Science Fiction";
-        }
-    },
+    ScienceFiction,
     Sport,
     Superhero,
     Thriller,

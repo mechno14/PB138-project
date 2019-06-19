@@ -3,6 +3,7 @@ package cz.muni.fi.pb138.videolibrary.gui;
 import cz.muni.fi.pb138.videolibrary.XMLDBManager;
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
+import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
@@ -11,9 +12,14 @@ import cz.muni.fi.pb138.videolibrary.manager.MediumManagerImpl;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.StringReader;
+import java.time.Year;
 
 public class gui {
 
@@ -75,5 +81,41 @@ public class gui {
         }
 
         mediumManager.findMediumByName("Shrek");
+
+
+        String xmlString = "<medium id=\"1\">\n" +
+                "                <mediumType>DVD</mediumType>\n" +
+                "                <name>Shrek</name>\n" +
+                "                <length>90</length>\n" +
+                "                <actors>\n" +
+                "                    <actor>Mike Myers</actor>\n" +
+                "                    <actor>Eddie Murphy</actor>\n" +
+                "                    <actor>Cameron Diaz</actor>\n" +
+                "                </actors>\n" +
+                "                <genres>\n" +
+                "                    <genre>Animated</genre>\n" +
+                "                    <genre>Adventure</genre>\n" +
+                "                    <genre>Comedy</genre>\n" +
+                "                </genres>\n" +
+                "                <releaseYear>2001</releaseYear>\n" +
+                "            </medium>";
+
+        JAXBContext jaxbContext;
+        try
+        {
+            jaxbContext = JAXBContext.newInstance(Medium.class);
+
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+
+            Medium employee = (Medium) jaxbUnmarshaller.unmarshal(new StringReader(xmlString));
+
+            System.out.println(employee.getId() + employee.getName() + employee.getLength()
+                + employee.getReleaseYear() + employee.getActors().size()
+                    + employee.getGenres().iterator().next());
+        }
+        catch (JAXBException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

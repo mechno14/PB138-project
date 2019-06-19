@@ -1,11 +1,13 @@
 package cz.muni.fi.pb138.videolibrary.entity;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Year;
 import java.util.Set;
 
-@XmlRootElement
+@XmlRootElement(name="medium")
 public class Medium {
     private Long id;
     private String name;
@@ -14,14 +16,14 @@ public class Medium {
     private Category category;
     private Set<String> actors;
     private Set<Genre> genres;
-    private Year releaseYear;
+    private int releaseYear;
 
     public Medium() {
     }
 
     public Medium(String name, MediumType mediumType, int length,
                   Category category, Set<String> actors, Set<Genre> genres,
-                  Year releaseYear) {
+                  int releaseYear) {
         this.name = name;
         this.mediumType = mediumType;
         this.length = length;
@@ -35,7 +37,7 @@ public class Medium {
         return id;
     }
 
-    @XmlElement
+    @XmlAttribute
     public void setId(Long id) {
         this.id = id;
     }
@@ -80,7 +82,8 @@ public class Medium {
         return actors;
     }
 
-    @XmlElement
+    @XmlElementWrapper
+    @XmlElement(name="actor")
     public void setActors(Set<String> actors) {
         this.actors = actors;
     }
@@ -89,17 +92,18 @@ public class Medium {
         return genres;
     }
 
-    @XmlElement
+    @XmlElementWrapper
+    @XmlElement(name="genre")
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
 
-    public Year getReleaseYear() {
+    public int getReleaseYear() {
         return releaseYear;
     }
 
     @XmlElement
-    public void setReleaseYear(Year releaseYear) {
+    public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
     }
 }
