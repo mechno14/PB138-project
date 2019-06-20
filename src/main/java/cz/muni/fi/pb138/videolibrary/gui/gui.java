@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class gui {
@@ -141,11 +142,20 @@ public class gui {
             //System.out.println(category.getName());
         }
 
+        /*
         try
         {
             XMLDBManagerImpl db = new XMLDBManagerImpl();
-            db.exportQueryFromDatabase();
+            Map<Category, Set<Medium>> test = db.exportQueryFromDatabase();
+            for (Map.Entry<Category, Set<Medium>> entry : test.entrySet()) {
+                System.out.println(entry.getKey().getName() + ":");
+                for (Medium med:
+                     entry.getValue()) {
+                    System.out.println(med.getName());
+                }
+            }
         } catch (Exception ex) {ex.printStackTrace();}
+         */
 /*
         Iterator<Category> it = categories.iterator();
         while (it.hasNext()) {

@@ -280,13 +280,26 @@ public class XMLDBManagerImpl implements XMLDBManager{
         }
     }
 
-    public Set<Medium> exportQueryFromDatabase() {
+    public Map<Category, Set<Medium>> exportQueryFromDatabase() {
         String xpath = "doc('database.xml')/videoLibrary/categories";
         String xml = xPathCaller(xpath);
 
+        Set<Category> categories = findAllCategories();
+
         Set<Medium> mediums = parseXmlToObject(xml, null);
 
-        return mediums;
+        Map<Category, Set<Medium>> export = new HashMap<>();
+
+        for (Category cat:
+             categories) {
+            export.put(cat, new HashSet<>());
+        }
+        for (Medium medium:
+             mediums) {
+            export.get(medium.getCategory()).add(medium);
+        }
+
+        return export;
     }
 
 
