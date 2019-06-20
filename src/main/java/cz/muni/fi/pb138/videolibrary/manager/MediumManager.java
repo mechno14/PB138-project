@@ -39,16 +39,21 @@ public interface MediumManager {
     Medium findMediumById(Long id);
 
     /**
-     * Finds medium by its name in database.
+     * Finds media by its name in database.
      *
-     * @param name attribute name of medium to be found.
-     * @return medium with given name or null if such medium isn't in db.
+     * @param name attribute name of media to be found.
+     * @return Set of media with given name.
      * @throws IllegalArgumentException when name is null or empty.
      */
-    Medium findMediumByName(String name);
+    Set<Medium> findMediumByName(String name);
 
     /**
-    */
+     * Finds media by its category in database.
+     *
+     * @param category category of media to be found.
+     * @return Set of media in given category.
+     * @throws IllegalArgumentException when category is null.
+     */
     Set<Medium> findAllMediaByCategory(Category category);
 
 }

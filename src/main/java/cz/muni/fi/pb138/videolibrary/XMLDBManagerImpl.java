@@ -173,8 +173,10 @@ public class XMLDBManagerImpl implements XMLDBManager{
 
     public String findMediumByName(String mediumName) {
         String xquery =
+                "<mediums>" +
                 "for $medium in doc('database.xml')/videoLibrary/categories/category/medium[name = '"+mediumName+"'] " +
-                        "return $medium";
+                        "return $medium" +
+                        "</mediums>";
         return xQueryCaller(xquery);
     }
 
@@ -223,7 +225,7 @@ public class XMLDBManagerImpl implements XMLDBManager{
 
     public String findAllMediumsByCategory(String category) {
         String xpath =
-                "<mediums><category>" + category + "</category>" +
+                "<mediums>" +
                         "{for $medium in doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']/medium " +
                         "return $medium}" +
                         "</mediums>";
