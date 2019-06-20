@@ -8,6 +8,7 @@ import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManagerImpl;
+import org.xmldb.api.base.XMLDBException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -62,9 +63,13 @@ public class gui {
                 tableModel.removeRow(table1.getSelectedRow());
             }
         });
+
         addMediumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                    AddMediumDialog dialog = new AddMediumDialog(categoryManager, mediumManager);
+                    dialog.pack();
+                    dialog.setVisible(true);
             }
         });
     }
