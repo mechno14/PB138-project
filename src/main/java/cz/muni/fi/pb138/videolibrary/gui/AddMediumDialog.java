@@ -1,8 +1,8 @@
-package cz.muni.fi.pb138.videolibrary.gui;
-
+package  cz.muni.fi.pb138.videolibrary.gui;
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
+import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.entity.MediumType;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
@@ -11,6 +11,7 @@ import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.HashSet;
 import java.util.Set;
 
 public class AddMediumDialog extends JDialog {
@@ -66,9 +67,32 @@ public class AddMediumDialog extends JDialog {
     }
 
     private void onOK() {
+        if (textFieldName.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Name cannot be empty");
+            return;
+        }
+        if (textFieldYear.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Year cannot be empty");
+            return;
+        }
+        int year;
+        try {
+            year = Integer.valueOf(textFieldYear.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Incorrect year");
+            return;
+        }
+        if (year < 1900) {
+            JOptionPane.showMessageDialog(null, "Year cannot be sooner than 1900");
+            return;
+        }
 
+        Set<Genre> genres = new HashSet<>();
+        genres.add(Genre.valueOf(comboBoxGenre.getSelectedItem().toString()));
 
-
+        mediumManager.createMedium(new Medium(textFieldName.getText(), MediumType.valueOf(comboBoxType.getSelectedItem().toString()),
+                0, new Category(comboBoxCategory.getSelectedItem().toString()), new HashSet<String>(), genres,
+                year));
 
         dispose();
     }
@@ -92,7 +116,6 @@ public class AddMediumDialog extends JDialog {
         comboBoxType = new JComboBox(MediumType.values());
 
         setComboBox();
-        System.out.println(comboBoxCategory.getSelectedItem());
     }
 
     private void setComboBox() {
@@ -105,3 +128,4 @@ public class AddMediumDialog extends JDialog {
 
     }
 }
+
