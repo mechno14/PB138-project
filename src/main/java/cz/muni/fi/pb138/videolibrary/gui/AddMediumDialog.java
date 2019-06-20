@@ -22,7 +22,10 @@ public class AddMediumDialog extends JDialog {
     private JComboBox comboBoxCategory;
     private JComboBox comboBoxType;
     private JTextField textFieldYear;
-    private JComboBox comboBoxGenre;
+    private JComboBox comboBoxGenre1;
+    private JTextField textFieldLength;
+    private JComboBox comboBoxGenre2;
+    private JComboBox comboBoxGenre3;
 
     private CategoryManager categoryManager;
     private MediumManager mediumManager;
@@ -82,13 +85,22 @@ public class AddMediumDialog extends JDialog {
             JOptionPane.showMessageDialog(null, "Incorrect year");
             return;
         }
+        int length;
+        try {
+            length = Integer.valueOf(textFieldLength.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Incorrect length");
+            return;
+        }
         if (year < 1900) {
             JOptionPane.showMessageDialog(null, "Year cannot be sooner than 1900");
             return;
         }
 
         Set<Genre> genres = new HashSet<>();
-        genres.add(Genre.valueOf(comboBoxGenre.getSelectedItem().toString()));
+        genres.add(Genre.valueOf(comboBoxGenre1.getSelectedItem().toString()));
+        genres.add(Genre.valueOf(comboBoxGenre2.getSelectedItem().toString()));
+        genres.add(Genre.valueOf(comboBoxGenre3.getSelectedItem().toString()));
 
         mediumManager.createMedium(new Medium(textFieldName.getText(), MediumType.valueOf(comboBoxType.getSelectedItem().toString()),
                 0, new Category(comboBoxCategory.getSelectedItem().toString()), new HashSet<String>(), genres,
@@ -112,7 +124,9 @@ public class AddMediumDialog extends JDialog {
 
     private void createUIComponents() {
         comboBoxCategory = new JComboBox();
-        comboBoxGenre = new JComboBox(Genre.values());
+        comboBoxGenre1 = new JComboBox(Genre.values());
+        comboBoxGenre2 = new JComboBox(Genre.values());
+        comboBoxGenre3 = new JComboBox(Genre.values());
         comboBoxType = new JComboBox(MediumType.values());
 
         setComboBox();
