@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -34,6 +36,10 @@ public class gui {
         addCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (textField1.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Name of category cannot be empty.");
+                    return;
+                }
                 Category category = new Category(textField1.getText());
                 categoryManager.createCategory(category);
                 setComboBox();
@@ -42,8 +48,10 @@ public class gui {
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TableModel tableModel = (TableModel) table1.getModel();
-                tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
+                if (comboBox1.getSelectedItem() != null) {
+                    TableModel tableModel = (TableModel) table1.getModel();
+                    tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
+                }
             }
         });
         deleteButton.addActionListener(new ActionListener() {
@@ -56,8 +64,6 @@ public class gui {
         addMediumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
             }
         });
     }
@@ -66,7 +72,7 @@ public class gui {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JFrame frame = new JFrame("Car Rental");
+                JFrame frame = new JFrame("Video Library");
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 frame.setContentPane(new gui().panel);
                 frame.setPreferredSize(new Dimension(1000,600));
@@ -90,30 +96,15 @@ public class gui {
                 new cz.muni.fi.pb138.videolibrary.gui.TableModel
                         (mediumManager, new Category(comboBox1.getSelectedItem().toString()));
         table1 = new JTable(tableModel);
-
-        setComboBox();
-
     }
 
     private void setComboBox() {
         comboBox1.removeAllItems();
-        Category cat = new Category();
         Set<Category> categories = categoryManager.findAllCategories();
         for(Category category : categories) {
             comboBox1.addItem(category.getName());
+            System.out.println(category.getName());
         }
-/*
-        Iterator<Category> it = categories.iterator();
-        while (it.hasNext()) {
-            cat = it.next();
-        }
-
-        Set<Medium> media = mediumManager.findAllMediaByCategory
-                (cat);
-
-        for (Medium medium : media) {
-            System.out.println(medium.getName());
-        }*/
 
     }
 }
