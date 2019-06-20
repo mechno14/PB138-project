@@ -4,8 +4,7 @@ import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
-import cz.muni.fi.pb138.videolibrary.manager.MediumManagerImpl;
-import org.xmldb.api.base.XMLDBException;
+
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -21,11 +20,6 @@ public class AddMediumDialog extends JDialog {
     public AddMediumDialog(CategoryManager categoryManager, MediumManager mediumManager) {
             this.categoryManager = categoryManager;
             this.mediumManager = mediumManager;
-
-        //XMLDBManagerImpl nativeXMLDatabaseManager = new XMLDBManagerImpl();
-
-        /*categoryManager = new CategoryManagerImpl(nativeXMLDatabaseManager);
-        mediumManager = new MediumManagerImpl(nativeXMLDatabaseManager);*/
 
         setContentPane(contentPane);
         setModal(true);
