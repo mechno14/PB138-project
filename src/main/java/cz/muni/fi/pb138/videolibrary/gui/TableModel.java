@@ -1,5 +1,4 @@
 package cz.muni.fi.pb138.videolibrary.gui;
-
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
@@ -34,6 +33,10 @@ public class TableModel extends AbstractTableModel {
         mediumManager.deleteMedium(medium);
         media = new ArrayList<>(mediumManager.findAllMediaByCategory(category));
         fireTableDataChanged();
+    }
+
+    public Medium getMediumAtRow(int i) {
+        return media.get(i);
     }
 
     @Override

@@ -3,6 +3,7 @@ package cz.muni.fi.pb138.videolibrary.gui;
 import cz.muni.fi.pb138.videolibrary.XMLDBManager;
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
+import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
@@ -75,18 +76,29 @@ public class gui {
         addMediumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    AddMediumDialog dialog = new AddMediumDialog(categoryManager, mediumManager);
-                    dialog.pack();
-                    dialog.setVisible(true);
+                AddMediumDialog dialog = new AddMediumDialog(categoryManager, mediumManager);
+                dialog.pack();
+                dialog.setVisible(true);
+
+                TableModel tableModel = (TableModel) table1.getModel();
+                tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
             }
         });
 
         relocateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddMediumDialog dialog = new AddMediumDialog(categoryManager, mediumManager);
+                if (table1.getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(null, "No medium selected.");
+                    return;
+                }
+
+                TableModel tableModel = (TableModel) table1.getModel();
+                RelocateMedium dialog = new RelocateMedium(categoryManager, tableModel.getMediumAtRow(table1.getSelectedRow()));
                 dialog.pack();
                 dialog.setVisible(true);
+
+                tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
             }
         });
     }
@@ -149,3 +161,4 @@ public class gui {
 
     }
 }
+
