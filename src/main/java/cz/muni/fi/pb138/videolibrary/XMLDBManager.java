@@ -4,6 +4,7 @@ import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import org.xmldb.api.base.XMLDBException;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,7 +21,7 @@ public interface XMLDBManager {
      * Get first free ID in database.
      * @return first free ID in database.
      */
-    public String getFirstFreeId();
+    public Long getFirstFreeId();
 
     /**
      * Creates new Category in database.
@@ -74,6 +75,13 @@ public interface XMLDBManager {
     public String findMediumByName(String mediumName);
 
     /**
+     * Finds name of category where is medium with specified id.
+     * @param mediumId in category
+     * @return category name
+     */
+    public String findCategoryByMediumId(String mediumId);
+
+    /**
      * Finds all Categories.
      * @return Set of Names of categories.
      */
@@ -85,4 +93,16 @@ public interface XMLDBManager {
      * @return Mediums Query in given Category
      */
     public String findAllMediumsByCategory(String category);
+
+    /**
+     * Imports data into database.
+     * @param categoryMap data to be imported
+     */
+    public void importIntoDatabase(Map<Category, Set<Medium>> categoryMap);
+
+    /**
+     * Exports query from database.
+     * @return exported query from database
+     */
+    public String exportQueryFromDatabase();
 }

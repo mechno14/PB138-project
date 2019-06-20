@@ -1,5 +1,6 @@
 package cz.muni.fi.pb138.videolibrary.gui;
 
+import cz.muni.fi.pb138.videolibrary.XMLDBManager;
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
@@ -105,6 +106,24 @@ public class gui {
             comboBox1.addItem(category.getName());
             System.out.println(category.getName());
         }
+
+        try
+        {
+            XMLDBManagerImpl db = new XMLDBManagerImpl();
+            System.out.println(db.exportQueryFromDatabase());
+        } catch (Exception ex) {ex.printStackTrace();}
+/*
+        Iterator<Category> it = categories.iterator();
+        while (it.hasNext()) {
+            cat = it.next();
+        }
+
+        Set<Medium> media = mediumManager.findAllMediaByCategory
+                (cat);
+
+        for (Medium medium : media) {
+            System.out.println(medium.getName());
+        }*/
 
     }
 }
