@@ -1,6 +1,9 @@
 package cz.muni.fi.pb138.videolibrary.gui;
 
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
+import cz.muni.fi.pb138.videolibrary.entity.Category;
+import cz.muni.fi.pb138.videolibrary.entity.Genre;
+import cz.muni.fi.pb138.videolibrary.entity.MediumType;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
@@ -8,6 +11,7 @@ import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Set;
 
 public class AddMediumDialog extends JDialog {
     private JPanel contentPane;
@@ -19,12 +23,12 @@ public class AddMediumDialog extends JDialog {
     private JTextField textFieldYear;
     private JComboBox comboBoxGenre;
 
-    static private CategoryManager categoryManager;
-    static private MediumManager mediumManager;
+    private CategoryManager categoryManager;
+    private MediumManager mediumManager;
 
     public AddMediumDialog(CategoryManager categoryManager, MediumManager mediumManager) {
-            this.categoryManager = categoryManager;
-            this.mediumManager = mediumManager;
+        this.categoryManager = categoryManager;
+        this.mediumManager = mediumManager;
 
         setContentPane(contentPane);
         setModal(true);
@@ -57,10 +61,15 @@ public class AddMediumDialog extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+
     }
 
     private void onOK() {
-        // add your code here
+
+
+
+
         dispose();
     }
 
@@ -70,9 +79,29 @@ public class AddMediumDialog extends JDialog {
     }
 
     public static void main(String[] args) throws Exception {
+        /*
         AddMediumDialog dialog = new AddMediumDialog(categoryManager, mediumManager);
         dialog.pack();
         dialog.setVisible(true);
-        System.exit(0);
+        System.exit(0);*/
+    }
+
+    private void createUIComponents() {
+        comboBoxCategory = new JComboBox();
+        comboBoxGenre = new JComboBox(Genre.values());
+        comboBoxType = new JComboBox(MediumType.values());
+
+        setComboBox();
+        System.out.println(comboBoxCategory.getSelectedItem());
+    }
+
+    private void setComboBox() {
+        comboBoxCategory.removeAllItems();
+        Set<Category> categories = categoryManager.findAllCategories();
+
+        for(Category category : categories) {
+            comboBoxCategory.addItem(category.getName());
+        }
+
     }
 }

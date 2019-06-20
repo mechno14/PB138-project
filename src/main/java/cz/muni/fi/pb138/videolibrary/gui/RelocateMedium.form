@@ -65,7 +65,7 @@
           <text value="To category:"/>
         </properties>
       </component>
-      <component id="136e7" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+      <component id="136e7" class="javax.swing.JComboBox" binding="comboBoxCategory">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
