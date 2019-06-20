@@ -88,6 +88,7 @@ public class MediumManagerImpl implements MediumManager {
                 medium.setGenres(new HashSet<>());
             if (medium.getActors() == null)
                 medium.setActors(new HashSet<>());
+            medium.setCategory(new Category(databaseManager.findCategoryByMediumId(medium.getId().toString())));
             return medium;
         }
         catch (JAXBException e)
@@ -98,35 +99,24 @@ public class MediumManagerImpl implements MediumManager {
     }
 
     @Override
-    public Medium findMediumByName(String name) {
+    public Set<Medium> findMediumByName(String name) {
         if (name == null || name.isEmpty())
             throw new IllegalArgumentException("Name cannot be null or empty.");
 
         String xmlString = databaseManager.findMediumByName(name);
-        JAXBContext jaxbContext;
-        Medium medium;
-        try
-        {
-            jaxbContext = JAXBContext.newInstance(Medium.class);
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            medium = (Medium) jaxbUnmarshaller.unmarshal(new StringReader(xmlString));
-            if (medium.getGenres() == null)
-                medium.setGenres(new HashSet<>());
-            if (medium.getActors() == null)
-                medium.setActors(new HashSet<>());
-            return medium;
-        }
-        catch (JAXBException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
+        return gettt(xmlString, null);
     }
 
     @Override
     public Set<Medium> findAllMediaByCategory(Category category) {
+        if (category == null)
+            throw new IllegalArgumentException("Category cannot be null");
 
         String xmlString = databaseManager.findAllMediumsByCategory(category.getName());
+        return gettt(xmlString, category);
+    }
+
+    private Set<Medium> gettt(String xmlString, Category category) {
         JAXBContext jaxbContext;
         Set<Medium> media = new HashSet<>();
 
@@ -144,7 +134,7 @@ public class MediumManagerImpl implements MediumManager {
                 String node = "<medium id=\"" + mediumElement.getAttribute("id") + "\">\n" +
                         "<mediumType>" +
                         mediumElement.getElementsByTagName("mediumType")
-                            .item(0).getTextContent() +
+                                .item(0).getTextContent() +
                         "</mediumType>\n" +
                         "<name>" +
                         mediumElement.getElementsByTagName("name")
@@ -194,8 +184,9 @@ public class MediumManagerImpl implements MediumManager {
                         medium.setGenres(new HashSet<>());
                     if (medium.getActors() == null)
                         medium.setActors(new HashSet<>());
-                    medium.setCategory
-                            (new Category(doc.getElementsByTagName("category").item(0).getTextContent()));
+                    if (category == null) {
+                        medium.setCategory(new Category(databaseManager.findCategoryByMediumId(medium.getId().toString())));
+                    } else medium.setCategory(category);
                     media.add(medium);
                 }
                 catch (JAXBException e)
@@ -209,6 +200,5 @@ public class MediumManagerImpl implements MediumManager {
         }
 
         return media;
-
     }
 }

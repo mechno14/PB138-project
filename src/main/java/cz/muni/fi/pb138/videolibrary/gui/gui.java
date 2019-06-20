@@ -59,6 +59,10 @@ public class gui {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (table1.getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(null, "No medium selected.");
+                    return;
+                }
                 TableModel tableModel = (TableModel) table1.getModel();
                 tableModel.removeRow(table1.getSelectedRow());
             }

@@ -214,13 +214,14 @@ public class MediumManagerImplTest {
         });
     }
 
+    /*
     @Test
     void findMediumByName() {
         Medium medium = medium42Untouchables().build();
         Long id = medium.getId();
         manager.createMedium(medium);
         Assertions.assertTrue(manager.findMediumByName("Untouchables").getId().equals(id));
-    }
+    }*/
 
 
 
