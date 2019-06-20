@@ -1,30 +1,24 @@
 package cz.muni.fi.pb138.videolibrary.gui;
 
-import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
-import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
-
 
 import javax.swing.*;
 import java.awt.event.*;
 
-public class AddMediumDialog extends JDialog {
+public class RelocateMedium extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField textFieldName;
     private JComboBox comboBoxCategory;
-    private JComboBox comboBoxType;
-    private JTextField textFieldYear;
-    private JComboBox comboBoxGenre;
 
     static private CategoryManager categoryManager;
     static private MediumManager mediumManager;
 
-    public AddMediumDialog(CategoryManager categoryManager, MediumManager mediumManager) {
-            this.categoryManager = categoryManager;
-            this.mediumManager = mediumManager;
+
+    public RelocateMedium(CategoryManager categoryManager, MediumManager mediumManager) {
+        this.categoryManager = categoryManager;
+        this.mediumManager = mediumManager;
 
         setContentPane(contentPane);
         setModal(true);
@@ -34,7 +28,6 @@ public class AddMediumDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
-
         });
 
         buttonCancel.addActionListener(new ActionListener() {
@@ -69,8 +62,8 @@ public class AddMediumDialog extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) throws Exception {
-        AddMediumDialog dialog = new AddMediumDialog(categoryManager, mediumManager);
+    public static void main(String[] args) {
+        RelocateMedium dialog = new RelocateMedium(categoryManager, mediumManager);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

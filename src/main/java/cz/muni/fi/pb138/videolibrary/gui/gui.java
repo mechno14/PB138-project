@@ -29,6 +29,7 @@ public class gui {
     private JTextField textField1;
     private JButton addCategoryButton;
     private JButton addMediumButton;
+    private JButton relocateButton;
 
     private CategoryManager categoryManager;
     private MediumManager mediumManager;
@@ -74,6 +75,15 @@ public class gui {
                     AddMediumDialog dialog = new AddMediumDialog(categoryManager, mediumManager);
                     dialog.pack();
                     dialog.setVisible(true);
+            }
+        });
+
+        relocateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddMediumDialog dialog = new AddMediumDialog(categoryManager, mediumManager);
+                dialog.pack();
+                dialog.setVisible(true);
             }
         });
     }
