@@ -39,12 +39,15 @@ public class gui {
         addCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().isEmpty()) {
+                if (textField1.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Name of category cannot be empty.");
                     return;
                 }
                 Category category = new Category(textField1.getText());
-                categoryManager.createCategory(category);
+                if (!categoryManager.createCategory(category)) {
+                    JOptionPane.showMessageDialog(null, "Name of category already exist.");
+                    return;
+                }
                 setComboBox();
             }
         });
@@ -123,13 +126,13 @@ public class gui {
         Set<Category> categories = categoryManager.findAllCategories();
         for(Category category : categories) {
             comboBox1.addItem(category.getName());
-            System.out.println(category.getName());
+            //System.out.println(category.getName());
         }
 
         try
         {
             XMLDBManagerImpl db = new XMLDBManagerImpl();
-            System.out.println(db.exportQueryFromDatabase());
+            db.exportQueryFromDatabase();
         } catch (Exception ex) {ex.printStackTrace();}
 /*
         Iterator<Category> it = categories.iterator();

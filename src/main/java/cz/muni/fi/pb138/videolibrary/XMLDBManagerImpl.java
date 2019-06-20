@@ -4,12 +4,22 @@ import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import org.exist.xmldb.EXistResource;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
 import java.util.*;
 
 /**
@@ -82,13 +92,18 @@ public class XMLDBManagerImpl implements XMLDBManager{
         return (long)counter;
     }
 
-    public void createCategory(Category category) {
+    public boolean createCategory(Category category) {
+        if (categoryExist(category))
+        {
         try {
             CompiledExpression compiledExpression = xQueryService.compile("update insert <category name='" + category.getName() + "' /> into doc('database.xml')/videoLibrary/categories");
             xQueryService.execute(compiledExpression);
         } catch (XMLDBException ex) {
             ex.printStackTrace();
         }
+        return true;
+        }
+        return false;
     }
 
     public void deleteCategory(Category category) {
@@ -165,19 +180,38 @@ public class XMLDBManagerImpl implements XMLDBManager{
     }
 
 
-    public String findMediumById(String mediumId) {
+    public Medium findMediumById(String mediumId) {
         String xpath =
                 "doc('database.xml')/videoLibrary/categories/category/medium[@id='"+mediumId+"']";
-        return xPathCaller(xpath);
+        String xmlString =  xPathCaller(xpath);
+        JAXBContext jaxbContext;
+        Medium medium;
+        try
+        {
+            jaxbContext = JAXBContext.newInstance(Medium.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            medium = (Medium) jaxbUnmarshaller.unmarshal(new StringReader(xmlString));
+            if (medium.getGenres() == null)
+                medium.setGenres(new HashSet<>());
+            if (medium.getActors() == null)
+                medium.setActors(new HashSet<>());
+            medium.setCategory(new Category(findCategoryByMediumId(medium.getId().toString())));
+            return medium;
+        }
+        catch (JAXBException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public String findMediumByName(String mediumName) {
+    public Set<Medium> findMediumByName(String mediumName) {
         String xquery =
                 "<mediums>" +
                 "for $medium in doc('database.xml')/videoLibrary/categories/category/medium[name = '"+mediumName+"'] " +
                         "return $medium" +
                         "</mediums>";
-        return xQueryCaller(xquery);
+        return parseXmlToObject(xPathCaller(xquery), null);
     }
 
     public String findCategoryByMediumId(String mediumId) {
@@ -223,13 +257,13 @@ public class XMLDBManagerImpl implements XMLDBManager{
         return cats;
     }
 
-    public String findAllMediumsByCategory(String category) {
+    public Set<Medium> findAllMediumsByCategory(String category) {
         String xpath =
                 "<mediums>" +
                         "{for $medium in doc('database.xml')/videoLibrary/categories/category[@name='" + category + "']/medium " +
                         "return $medium}" +
                         "</mediums>";
-        return xPathCaller(xpath);
+        return parseXmlToObject(xPathCaller(xpath),null);
     }
 
     public void importIntoDatabase(Map<Category, Set<Medium>> categoryMap) {
@@ -246,10 +280,15 @@ public class XMLDBManagerImpl implements XMLDBManager{
         }
     }
 
-    public String exportQueryFromDatabase() {
+    public Set<Medium> exportQueryFromDatabase() {
         String xpath = "doc('database.xml')/videoLibrary/categories";
-        return xPathCaller(xpath);
+        String xml = xPathCaller(xpath);
+
+        Set<Medium> mediums = parseXmlToObject(xml, null);
+
+        return mediums;
     }
+
 
     public boolean categoryExist(Category category) {
         String xquery =
@@ -319,4 +358,91 @@ public class XMLDBManagerImpl implements XMLDBManager{
         }
         return output;
     }
-}
+
+    private Set<Medium> parseXmlToObject(String xmlString, Category category) {
+            JAXBContext jaxbContext;
+            Set<Medium> media = new HashSet<>();
+
+            try {
+                DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                InputSource is = new InputSource();
+                is.setCharacterStream(new StringReader(xmlString));
+
+                Document doc = db.parse(is);
+
+                NodeList mediaList = doc.getElementsByTagName("medium");
+
+                for (int i = 0; i < mediaList.getLength(); i++) {
+                    Element mediumElement = (Element) mediaList.item(i);
+                    String node = "<medium id=\"" + mediumElement.getAttribute("id") + "\">\n" +
+                            "<mediumType>" +
+                            mediumElement.getElementsByTagName("mediumType")
+                                    .item(0).getTextContent() +
+                            "</mediumType>\n" +
+                            "<name>" +
+                            mediumElement.getElementsByTagName("name")
+                                    .item(0).getTextContent() +
+                            "</name>\n" +
+                            "<length>" +
+                            mediumElement.getElementsByTagName("length")
+                                    .item(0).getTextContent() +
+                            "</length>\n";
+
+
+                    NodeList actorList = mediumElement.getElementsByTagName("actor");
+                    if (actorList.getLength() > 0) {
+                        node += "<actors>\n";
+                        for (int j = 0; j < actorList.getLength(); j++) {
+                            Element actorElement = (Element) actorList.item(j);
+                            node += "<actor>" +
+                                    actorElement.getTextContent() +
+                                    "</actor>\n";
+                        }
+                        node += "</actors>\n";
+                    }
+
+                    NodeList genresList = mediumElement.getElementsByTagName("genre");
+                    if (actorList.getLength() > 0) {
+                        node += "<genres>\n";
+                        for (int j = 0; j < genresList.getLength(); j++) {
+                            Element genreElement = (Element) genresList.item(j);
+                            node += "<genre>" +
+                                    genreElement.getTextContent() +
+                                    "</genre>\n";
+                        }
+                        node += "</genres>\n";
+                    }
+
+                    node += "<releaseYear>" +
+                            mediumElement.getElementsByTagName("releaseYear")
+                                    .item(0).getTextContent() +
+                            "</releaseYear>\n</medium>\n";
+
+                    try
+                    {
+                        jaxbContext = JAXBContext.newInstance(Medium.class);
+                        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+                        Medium medium = (Medium) jaxbUnmarshaller.unmarshal(new StringReader(node));
+                        if (medium.getGenres() == null)
+                            medium.setGenres(new HashSet<>());
+                        if (medium.getActors() == null)
+                            medium.setActors(new HashSet<>());
+                        if (category == null) {
+                            medium.setCategory(new Category(findCategoryByMediumId(medium.getId().toString())));
+                        } else medium.setCategory(category);
+                        media.add(medium);
+                    }
+                    catch (JAXBException e)
+                    {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return media;
+        }
+    }
+

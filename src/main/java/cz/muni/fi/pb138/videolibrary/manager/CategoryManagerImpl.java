@@ -29,10 +29,10 @@ public class CategoryManagerImpl implements CategoryManager {
 
 
     @Override
-    public void createCategory(Category category) {
+    public boolean createCategory(Category category) {
         validate(category);
 
-        databaseManager.createCategory(category);
+        return databaseManager.createCategory(category);
     }
 
     @Override

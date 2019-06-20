@@ -15,7 +15,7 @@ public interface CategoryManager {
      * @throws EntityValidationException when category has null attributes or
      *          name is empty.
      */
-    void createCategory(Category category);
+    boolean createCategory(Category category);
 
     /**
      * Deletes the category from database.

@@ -3,14 +3,18 @@ package cz.muni.fi.pb138.videolibrary.gui;
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
+import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.entity.MediumType;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
+import cz.muni.fi.pb138.videolibrary.manager.MediumManagerImpl;
+import tests.cz.muni.fi.pb138.videolibary.classes.MediumManagerImplTest;
 
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.HashSet;
 import java.util.Set;
 
 public class AddMediumDialog extends JDialog {
@@ -66,9 +70,22 @@ public class AddMediumDialog extends JDialog {
     }
 
     private void onOK() {
+        if (textFieldName.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Name of medium cannot be empty.");
+            return;
+        }
+        if (textFieldYear.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Year of medium cannot be empty.");
+            return;
+        }
 
+        Category category = new Category(comboBoxCategory.getSelectedItem().toString());
+        MediumType mediumType = MediumType.valueOf(comboBoxType.getSelectedItem().toString());
+        Genre genre = Genre.valueOf(comboBoxGenre.getSelectedItem().toString());
 
-
+        Medium medium = new Medium(textFieldName.getText().trim(),
+                mediumType, category, genre, Integer.valueOf(textFieldYear.getText().trim()));
+        mediumManager.createMedium(medium);
 
         dispose();
     }

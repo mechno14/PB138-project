@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashSet;
 import java.util.Set;
 
 @XmlRootElement(name="medium")
@@ -18,6 +19,20 @@ public class Medium {
     private int releaseYear;
 
     public Medium() {
+    }
+
+
+    public Medium(String name, MediumType mediumType, Category category,
+                  Genre genre, int releaseYear) {
+        this.name = name;
+        this.mediumType = mediumType;
+        this.category = category;
+        Set<Genre> genres = new HashSet<>();
+        genres.add(genre);
+        this.genres = genres;
+        Set<String> actors = new HashSet<>();
+        this.actors = actors;
+        this.releaseYear = releaseYear;
     }
 
     public Medium(String name, MediumType mediumType, int length,

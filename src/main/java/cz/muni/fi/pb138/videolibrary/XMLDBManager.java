@@ -26,8 +26,9 @@ public interface XMLDBManager {
     /**
      * Creates new Category in database.
      * @param category to be created in database
+     * @return false if category with given name already exist, true otherwise
      */
-    public void createCategory(Category category);
+    public boolean createCategory(Category category);
 
     /**
      * Deletes exist Category in database.
@@ -65,14 +66,14 @@ public interface XMLDBManager {
      * @param mediumId to be found
      * @return Medium with given ID
      */
-    public String findMediumById(String mediumId);
+    public Medium findMediumById(String mediumId);
 
     /**
      * Finds Medium with given Name.
      * @param mediumName medium name to be found
      * @return Medium Query with given Name
      */
-    public String findMediumByName(String mediumName);
+    public Set<Medium> findMediumByName(String mediumName);
 
     /**
      * Finds name of category where is medium with specified id.
@@ -92,7 +93,7 @@ public interface XMLDBManager {
      * @param category to be checked
      * @return Mediums Query in given Category
      */
-    public String findAllMediumsByCategory(String category);
+    public Set<Medium> findAllMediumsByCategory(String category);
 
     /**
      * Imports data into database.
@@ -104,5 +105,5 @@ public interface XMLDBManager {
      * Exports query from database.
      * @return exported query from database
      */
-    public String exportQueryFromDatabase();
+    public Set<Medium> exportQueryFromDatabase();
 }
