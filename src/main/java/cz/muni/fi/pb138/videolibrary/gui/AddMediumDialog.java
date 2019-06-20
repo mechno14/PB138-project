@@ -13,6 +13,16 @@ public class AddMediumDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JTextArea genreTextArea;
+    private JTextArea yearTextArea;
+    private JTextArea typeTextArea;
+    private JTextArea nameTextArea;
+    private JTextField textField4;
+    private JComboBox comboBox1;
+    private JTextArea toCategoryTextArea;
 
     static private CategoryManager categoryManager;
     static private MediumManager mediumManager;
