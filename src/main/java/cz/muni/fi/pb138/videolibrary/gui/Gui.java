@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class gui {
+public class Gui {
 
     private JPanel panel;
     private JComboBox comboBox1;
@@ -41,7 +41,7 @@ public class gui {
     private MediumManager mediumManager;
     private ODFUtility odfUtility;
 
-    public gui() {
+    public Gui() {
         addCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -211,7 +211,7 @@ public class gui {
             public void run() {
                 JFrame frame = new JFrame("Video Library");
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                frame.setContentPane(new gui().panel);
+                frame.setContentPane(new Gui().panel);
                 frame.setPreferredSize(new Dimension(1000,600));
                 frame.pack();
                 frame.setVisible(true);
