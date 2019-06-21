@@ -160,6 +160,11 @@ public class gui {
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
+
+                    TableModel tableModel = (TableModel) table1.getModel();
+                    if (comboBox1.getSelectedItem().toString().isEmpty()) {
+                        tableModel.setCategory(null);
+                    } else tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
                 }
 
             }
