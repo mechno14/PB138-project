@@ -35,6 +35,8 @@ public class gui {
     private JButton moreInfoButton;
     private JButton searchMediaButton;
     private JTextField textFieldFindByName;
+    private JButton importButton;
+    private JButton exportButton;
 
     private CategoryManager categoryManager;
     private MediumManager mediumManager;
@@ -157,6 +159,7 @@ public class gui {
     private void createUIComponents() throws Exception {
         panel = new JPanel();
         comboBox1 = new JComboBox();
+
 
         XMLDBManagerImpl nativeXMLDatabaseManager = new XMLDBManagerImpl();
         categoryManager = new CategoryManagerImpl(nativeXMLDatabaseManager);
