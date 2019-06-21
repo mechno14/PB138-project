@@ -33,6 +33,8 @@ public class gui {
     private JButton addMediumButton;
     private JButton relocateButton;
     private JButton moreInfoButton;
+    private JButton searchMediaButton;
+    private JTextField textFieldFindByName;
 
     private CategoryManager categoryManager;
     private MediumManager mediumManager;
