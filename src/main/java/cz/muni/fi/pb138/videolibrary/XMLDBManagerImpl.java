@@ -273,7 +273,14 @@ public class XMLDBManagerImpl implements XMLDBManager{
         }
         for (Medium medium:
              mediums) {
-            export.get(medium.getCategory()).add(medium);
+            if (export.containsKey(medium.getCategory())){
+                export.get(medium.getCategory()).add(medium);
+            }
+            else {
+                Set<Medium> meds = new HashSet<>();
+                meds.add(medium);
+                export.put(medium.getCategory(), meds);
+            }
         }
 
         return export;
