@@ -1,5 +1,6 @@
 package cz.muni.fi.pb138.videolibrary.gui;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
+import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
 
@@ -57,11 +58,21 @@ public class TableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Medium medium = media.get(rowIndex);
+
         switch (columnIndex) {
             case 0:
                 return medium.getName();
             case 1:
-                return 0;
+                StringBuilder stringBuilder = new StringBuilder();
+                Set<Genre> genres = medium.getGenres();
+                for (Genre genre : genres) {
+                    stringBuilder.append(genre);
+                    stringBuilder.append(", ");
+                }
+                if (stringBuilder.length() > 2) {
+                    stringBuilder.setLength(stringBuilder.length() - 2);
+                }
+                return stringBuilder.toString();
             case 2:
                 return medium.getReleaseYear();
             case 3:

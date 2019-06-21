@@ -415,7 +415,8 @@ public class XMLDBManagerImpl implements XMLDBManager{
                     }
 
                     NodeList genresList = mediumElement.getElementsByTagName("genre");
-                    if (actorList.getLength() > 0) {
+
+                    if (genresList.getLength() > 0) {
                         node += "<genres>\n";
                         for (int j = 0; j < genresList.getLength(); j++) {
                             Element genreElement = (Element) genresList.item(j);
@@ -436,6 +437,7 @@ public class XMLDBManagerImpl implements XMLDBManager{
                         jaxbContext = JAXBContext.newInstance(Medium.class);
                         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
                         Medium medium = (Medium) jaxbUnmarshaller.unmarshal(new StringReader(node));
+
                         if (medium.getGenres() == null)
                             medium.setGenres(new HashSet<>());
                         if (medium.getActors() == null)

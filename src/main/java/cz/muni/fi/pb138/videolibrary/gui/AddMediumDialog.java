@@ -116,15 +116,22 @@ public class AddMediumDialog extends JDialog {
             JOptionPane.showMessageDialog(null, "Year cannot be sooner than 1900");
             return;
         }
+        if (length < 0) {
+            JOptionPane.showMessageDialog(null, "Length can be negative");
+            return;
+        }
 
         Set<Genre> genres = new HashSet<>();
         genres.add(Genre.valueOf(comboBoxGenre1.getSelectedItem().toString()));
         genres.add(Genre.valueOf(comboBoxGenre2.getSelectedItem().toString()));
         genres.add(Genre.valueOf(comboBoxGenre3.getSelectedItem().toString()));
 
-        mediumManager.createMedium(new Medium(textFieldName.getText(), MediumType.valueOf(comboBoxType.getSelectedItem().toString()),
-                0, new Category(comboBoxCategory.getSelectedItem().toString()), new HashSet<String>(), genres,
-                year));
+        Medium medium = new Medium(textFieldName.getText(), MediumType.valueOf(comboBoxType.getSelectedItem().toString()),
+                length, new Category(comboBoxCategory.getSelectedItem().toString()), new HashSet<String>(), genres,
+                year);
+
+        mediumManager.createMedium(medium);
+
         dispose();
     }
 

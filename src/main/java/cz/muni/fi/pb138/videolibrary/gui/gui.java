@@ -32,6 +32,7 @@ public class gui {
     private JButton addCategoryButton;
     private JButton addMediumButton;
     private JButton relocateButton;
+    private JButton moreInfoButton;
 
     private CategoryManager categoryManager;
     private MediumManager mediumManager;
@@ -100,6 +101,20 @@ public class gui {
                 dialog.setVisible(true);
 
                 tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
+            }
+        });
+        moreInfoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (table1.getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(null, "No medium selected.");
+                    return;
+                }
+
+                TableModel tableModel = (TableModel) table1.getModel();
+                MoreInfoDialog dialog = new MoreInfoDialog(tableModel.getMediumAtRow(table1.getSelectedRow()));
+                dialog.pack();
+                dialog.setVisible(true);
             }
         });
     }

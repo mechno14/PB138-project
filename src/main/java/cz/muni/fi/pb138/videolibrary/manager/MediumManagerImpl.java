@@ -58,9 +58,7 @@ public class MediumManagerImpl implements MediumManager {
 
         if (medium.getId() != null)
             throw new IllegalEntityException("Entity has already id.");
-
         databaseManager.createMedium(medium);
-
     }
 
     @Override
