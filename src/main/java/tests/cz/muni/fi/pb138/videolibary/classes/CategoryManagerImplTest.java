@@ -1,7 +1,7 @@
 package tests.cz.muni.fi.pb138.videolibary.classes;
 
 
-import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
+import cz.muni.fi.pb138.videolibrary.manager.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;

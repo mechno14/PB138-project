@@ -1,29 +1,22 @@
 package cz.muni.fi.pb138.videolibrary.gui;
 
-import cz.muni.fi.pb138.videolibrary.XMLDBManager;
-import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
+import cz.muni.fi.pb138.videolibrary.manager.XMLDBManager;
+import cz.muni.fi.pb138.videolibrary.manager.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
-import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.manager.*;
 import org.apache.commons.io.FilenameUtils;
 import org.odftoolkit.simple.SpreadsheetDocument;
-import org.xmldb.api.base.XMLDBException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 

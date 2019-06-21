@@ -1,24 +1,11 @@
 package cz.muni.fi.pb138.videolibrary.manager;
 
-import cz.muni.fi.pb138.videolibrary.XMLDBManager;
-import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;
 import cz.muni.fi.pb138.videolibrary.exception.IllegalEntityException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.StringReader;
-import java.util.HashSet;
 import java.util.Set;
 
 public class MediumManagerImpl implements MediumManager {

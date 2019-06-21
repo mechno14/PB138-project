@@ -1,14 +1,10 @@
 package  cz.muni.fi.pb138.videolibrary.gui;
-import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.entity.MediumType;
 import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
-import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
 import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
-import cz.muni.fi.pb138.videolibrary.manager.MediumManagerImpl;
-import tests.cz.muni.fi.pb138.videolibary.classes.MediumManagerImplTest;
 
 
 import javax.swing.*;

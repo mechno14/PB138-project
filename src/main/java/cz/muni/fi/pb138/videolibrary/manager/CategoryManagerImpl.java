@@ -1,7 +1,5 @@
 package cz.muni.fi.pb138.videolibrary.manager;
 
-import cz.muni.fi.pb138.videolibrary.XMLDBManager;
-import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.exception.EntityValidationException;

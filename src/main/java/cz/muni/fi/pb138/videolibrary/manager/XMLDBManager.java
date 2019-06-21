@@ -1,4 +1,4 @@
-package cz.muni.fi.pb138.videolibrary;
+package cz.muni.fi.pb138.videolibrary.manager;
 
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
