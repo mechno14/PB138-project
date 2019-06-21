@@ -208,10 +208,11 @@ public class XMLDBManagerImpl implements XMLDBManager{
     public Set<Medium> findMediumByName(String mediumName) {
         String xquery =
                 "<mediums>" +
-                "for $medium in doc('database.xml')/videoLibrary/categories/category/medium[name = '"+mediumName+"'] " +
-                        "return $medium" +
+                "{for $medium in doc('database.xml')/videoLibrary/categories/category/medium[name = '"+mediumName+"'] " +
+                        "return $medium}" +
                         "</mediums>";
-        return parseXmlToObject(xPathCaller(xquery), null);
+        String xmlToParse = xQueryCaller(xquery);
+        return parseXmlToObject(xmlToParse, null);
     }
 
     public String findCategoryByMediumId(String mediumId) {
