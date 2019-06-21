@@ -141,9 +141,6 @@ public class ODFUtilityImpl implements ODFUtility {
         document.removeSheet(0);
         for (Category category : categoryMap.keySet()) {
             Table table = document.appendSheet(category.getName());
-            table.appendRow();
-            table.removeRowsByIndex(0, 3);
-            System.out.println(table.getRowCount());
             table.appendColumns(5);
             writeFirstRow(table.appendRow());
             categoryMap.get(category).forEach(movie -> parseMovie(table.appendRow(), movie));
