@@ -69,7 +69,7 @@ public class XMLDBManagerImpl implements XMLDBManager{
     }
 
     public boolean createCategory(Category category) {
-        if (categoryExist(category))
+        if (!categoryExist(category))
         {
         try {
             CompiledExpression compiledExpression = xQueryService.compile("update insert <category name='" + category.getName() + "' /> into doc('database.xml')/videoLibrary/categories");
