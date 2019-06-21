@@ -28,6 +28,7 @@ public class AddMediumDialog extends JDialog {
     private JTextField textFieldLength;
     private JComboBox comboBoxGenre2;
     private JComboBox comboBoxGenre3;
+    private JTextField textFieldActors;
 
     private CategoryManager categoryManager;
     private MediumManager mediumManager;
@@ -126,8 +127,16 @@ public class AddMediumDialog extends JDialog {
         genres.add(Genre.valueOf(comboBoxGenre2.getSelectedItem().toString()));
         genres.add(Genre.valueOf(comboBoxGenre3.getSelectedItem().toString()));
 
+        Set<String> actors = new HashSet<>();
+        if (!textFieldActors.getText().trim().isEmpty()) {
+            String[] split = textFieldActors.getText().trim().split(",");
+            for (String actor : split) {
+                actors.add(actor.trim());
+            }
+        }
+
         Medium medium = new Medium(textFieldName.getText(), MediumType.valueOf(comboBoxType.getSelectedItem().toString()),
-                length, new Category(comboBoxCategory.getSelectedItem().toString()), new HashSet<String>(), genres,
+                length, new Category(comboBoxCategory.getSelectedItem().toString()), actors, genres,
                 year);
 
         mediumManager.createMedium(medium);

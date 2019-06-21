@@ -138,6 +138,7 @@ public class gui {
                     return;
                 }
 
+                comboBox1.setSelectedItem("");
                 TableModel tableModel = (TableModel) table1.getModel();
                 tableModel.setCategory(null, textFieldFindByName.getText());
 
@@ -218,6 +219,7 @@ public class gui {
         mediumManager = new MediumManagerImpl(nativeXMLDatabaseManager);
         odfUtility = new ODFUtilityImpl();
         setComboBox();
+        comboBox1.setSelectedItem("");
 
         Category category = null;
         if (!comboBox1.getSelectedItem().toString().isEmpty()) {
