@@ -183,24 +183,6 @@ public class MediumManagerImplTest {
     }
 
     @Test
-    void findMediumById() {
-        Medium medium = medium42Untouchables().build();
-        Long id = medium.getId();
-        manager.createMedium(medium);
-        Assertions.assertTrue(manager.findMediumById(id).getName().equals("Untouchables"));
-    }
-
-    @Test
-    void removeMedium() {
-        Medium medium = medium42Untouchables().build();
-        Long id = medium.getId();
-        manager.createMedium(medium);
-        Assertions.assertTrue(manager.findMediumById(id) != null);
-        manager.deleteMedium(medium);
-        Assertions.assertTrue(manager.findMediumById(id) == null);
-    }
-
-    @Test
     void findMediumWithNullName() {
         Assertions.assertThrows(IllegalArgumentException.class, ()-> {
             manager.findMediumByName(null);

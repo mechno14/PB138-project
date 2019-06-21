@@ -17,12 +17,12 @@ public class CategoryManagerImplTest {
 
     private CategoryBuilder categoryDocumentaries() {
         return new CategoryBuilder()
-                .name("Documentaries");
+                .name("TEST123456");
     }
 
     private CategoryBuilder categoryMovies() {
         return new CategoryBuilder()
-                .name("Movies");
+                .name("TEST1234");
 
     }
 
@@ -48,9 +48,8 @@ public class CategoryManagerImplTest {
     void createDupliciteCategory() {
         Category category = categoryDocumentaries().build();
         manager.createCategory(category);
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> {
-            manager.createCategory(category);
-        });
+        Assertions.assertFalse(manager.createCategory(category));
+        manager.deleteCategory(category);
     }
 
     @Test
@@ -96,6 +95,8 @@ public class CategoryManagerImplTest {
         Assertions.assertTrue(allCategories.size() == numOfCat + 2);
         Assertions.assertTrue(allCategories.contains(category1));
         Assertions.assertTrue(allCategories.contains(category2));
+        manager.deleteCategory(category1);
+        manager.deleteCategory(category2);
     }
 
     @Test
@@ -112,6 +113,7 @@ public class CategoryManagerImplTest {
         allCategories = manager.findAllCategories();
         Assertions.assertTrue(allCategories.size() == (numOfElements + 1));
         Assertions.assertFalse(allCategories.contains(category1));
+        manager.deleteCategory(category2);
     }
 
 
