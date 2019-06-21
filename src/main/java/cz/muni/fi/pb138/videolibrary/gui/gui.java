@@ -5,19 +5,22 @@ import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Genre;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
-import cz.muni.fi.pb138.videolibrary.manager.CategoryManager;
-import cz.muni.fi.pb138.videolibrary.manager.CategoryManagerImpl;
-import cz.muni.fi.pb138.videolibrary.manager.MediumManager;
-import cz.muni.fi.pb138.videolibrary.manager.MediumManagerImpl;
+import cz.muni.fi.pb138.videolibrary.manager.*;
+import org.apache.commons.io.FilenameUtils;
+import org.odftoolkit.simple.SpreadsheetDocument;
 import org.xmldb.api.base.XMLDBException;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -40,7 +43,7 @@ public class gui {
 
     private CategoryManager categoryManager;
     private MediumManager mediumManager;
-
+    private ODFUtility odfUtility;
 
     public gui() {
         addCategoryButton.addActionListener(new ActionListener() {
@@ -140,6 +143,55 @@ public class gui {
 
             }
         });
+        importButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Import file");
+                fileChooser.setFileFilter(new FileNameExtensionFilter("ODS", "ods"));
+                if (fileChooser.showOpenDialog(importButton) == JFileChooser.APPROVE_OPTION) {
+                }
+
+                try {
+                    SpreadsheetDocument document = odfUtility.readFile(fileChooser.getSelectedFile());
+                    Map<Category,Set<Medium>> map = odfUtility.transformToSet(document);
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
+        exportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Export file");
+                fileChooser.setFileFilter(new FileNameExtensionFilter("ODS", "ods"));
+                if (fileChooser.showSaveDialog(exportButton) == JFileChooser.APPROVE_OPTION) {
+                }
+
+                String path = fileChooser.getSelectedFile().getAbsolutePath();
+                String extension = FilenameUtils.getExtension(fileChooser.getSelectedFile().getAbsolutePath());
+                if (!extension.equals("ods"))
+                    path += ".ods";
+
+                Map<Category, Set<Medium>> map = new HashMap<>();
+
+                Set<Category> categories = categoryManager.findAllCategories();
+                for (Category category : categories) {
+                    map.put(category, mediumManager.findAllMediaByCategory(category));
+                }
+
+                SpreadsheetDocument document = odfUtility.transformToDocument(map);
+
+                try {
+                    odfUtility.writeFile(path, document);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -164,6 +216,7 @@ public class gui {
         XMLDBManagerImpl nativeXMLDatabaseManager = new XMLDBManagerImpl();
         categoryManager = new CategoryManagerImpl(nativeXMLDatabaseManager);
         mediumManager = new MediumManagerImpl(nativeXMLDatabaseManager);
+        odfUtility = new ODFUtilityImpl();
         setComboBox();
 
         Category category = null;
