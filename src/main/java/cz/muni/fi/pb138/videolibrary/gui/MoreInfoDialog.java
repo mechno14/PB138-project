@@ -35,12 +35,17 @@ public class MoreInfoDialog extends JDialog {
         textFieldLength.setText(Integer.toString(medium.getLength()));
         textFieldYear.setText(Integer.toString(medium.getReleaseYear()));
         textFieldType.setText(medium.getMediumType().name());
+        StringBuilder actors = new StringBuilder();
         for (String actor : medium.getActors()) {
-            textFieldActors.setText(actor + ' ');
+            actors.append(actor + ' ');
         }
+        textFieldActors.setText(actors.toString());
+
+        StringBuilder genres = new StringBuilder();
         for (Genre genre : medium.getGenres()) {
-            textFieldGenres.setText(genre.name() + ' ');
+            genres.append(genre.name() + ' ');
         }
+        textFieldGenres.setText(genres.toString());
 
     }
 
