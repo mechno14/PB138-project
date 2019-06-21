@@ -21,7 +21,7 @@ public interface XMLDBManager {
      * Get first free ID in database.
      * @return first free ID in database.
      */
-    Long getFirstFreeId();
+    Long getMaxId();
 
     /**
      * Creates new Category in database.

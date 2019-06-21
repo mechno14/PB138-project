@@ -55,41 +55,17 @@ public class XMLDBManagerImpl implements XMLDBManager{
         collection.close();
     }
 
-    public Long getFirstFreeId() {
-        String xpath =
-                "for $category in doc('database.xml')/videoLibrary/categories/category " +
-                        "for $medium in $category/medium " +
-                        "return number($medium/@id)";
-        Set<Integer> ids = new HashSet<>();
-        try {
-            CompiledExpression compiledExpression = xQueryService.compile(xpath);
-            ResourceSet result = xQueryService.execute(compiledExpression);
-            ResourceIterator i = result.getIterator();
-            Resource res = null;
-            while (i.hasMoreResources()) {
-                try {
-                    res = i.nextResource();
-                    ids.add(Integer.valueOf((String) res.getContent()));
-                } finally {
-                    try {
-                        ((EXistResource) res).freeResources();
-                    } catch (XMLDBException xe) {
-                        xe.printStackTrace();
-                    }
-                }
-            }
-        } catch (XMLDBException ex) {
-            ex.printStackTrace();
+    public Long getMaxId() {
+        String xquery = "let $max := data(doc('database.xml')/videoLibrary/categories/category/medium/@id) "
+                + "return $max";
+
+        String max = xQueryCaller(xquery);
+
+        if (max.isEmpty()) {
+            return (long)0;
         }
-        int counter = 1;
-        for (Integer id :
-                ids) {
-            if (id != counter) {
-                return (long)counter;
-            }
-            counter++;
-        }
-        return (long)counter;
+
+        return Long.valueOf(max);
     }
 
     public boolean createCategory(Category category) {
@@ -117,7 +93,7 @@ public class XMLDBManagerImpl implements XMLDBManager{
 
     public void createMedium(Medium medium) {
         if (medium.getId() == null) {
-            medium.setId(getFirstFreeId());
+            medium.setId(getMaxId()+1);
         }
         String mediumQuery = "<medium id='" + medium.getId() + "'>" +
                 "<mediumType>" + medium.getMediumType().toString() + "</mediumType>" +
