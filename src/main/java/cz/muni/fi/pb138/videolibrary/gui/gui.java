@@ -230,6 +230,10 @@ public class gui {
                 new cz.muni.fi.pb138.videolibrary.gui.TableModel
                         (mediumManager, category);
         table1 = new JTable(tableModel);
+        table1.getColumnModel().getColumn(0).setPreferredWidth(200);
+        table1.getColumnModel().getColumn(1).setPreferredWidth(200);
+        table1.getColumnModel().getColumn(2).setPreferredWidth(60);
+        table1.getColumnModel().getColumn(3).setPreferredWidth(60);
     }
 
     private void setComboBox() {
