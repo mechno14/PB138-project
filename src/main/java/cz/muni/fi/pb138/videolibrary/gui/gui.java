@@ -184,6 +184,13 @@ public class gui {
                     map.put(category, mediumManager.findAllMediaByCategory(category));
                 }
 
+                for (Map.Entry<Category, Set<Medium>> entry : map.entrySet()) {
+                    System.out.println(entry.getKey().getName());
+                    for (Medium medium : entry.getValue()) {
+                        System.out.println(medium.getName());
+                    }
+                }
+
                 SpreadsheetDocument document = odfUtility.transformToDocument(map);
 
                 try {
