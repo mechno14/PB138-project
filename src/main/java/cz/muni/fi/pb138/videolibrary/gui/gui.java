@@ -198,6 +198,16 @@ public class gui {
                 }
             }
         });
+        table1.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                if (mouseEvent.getClickCount() == 2 && table1.getSelectedRow() != -1) {
+                    TableModel tableModel = (TableModel) table1.getModel();
+                    MoreInfoDialog dialog = new MoreInfoDialog(tableModel.getMediumAtRow(table1.getSelectedRow()));
+                    dialog.pack();
+                    dialog.setVisible(true);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
