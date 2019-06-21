@@ -171,33 +171,25 @@ public class gui {
                 fileChooser.setDialogTitle("Export file");
                 fileChooser.setFileFilter(new FileNameExtensionFilter("ODS", "ods"));
                 if (fileChooser.showSaveDialog(exportButton) == JFileChooser.APPROVE_OPTION) {
-                }
+                    String path = fileChooser.getSelectedFile().getAbsolutePath();
+                    String extension = FilenameUtils.getExtension(fileChooser.getSelectedFile().getAbsolutePath());
+                    if (!extension.equals("ods"))
+                        path += ".ods";
 
-                String path = fileChooser.getSelectedFile().getAbsolutePath();
-                String extension = FilenameUtils.getExtension(fileChooser.getSelectedFile().getAbsolutePath());
-                if (!extension.equals("ods"))
-                    path += ".ods";
+                    Map<Category, Set<Medium>> map = new HashMap<>();
 
-                Map<Category, Set<Medium>> map = new HashMap<>();
-
-                Set<Category> categories = categoryManager.findAllCategories();
-                for (Category category : categories) {
-                    map.put(category, mediumManager.findAllMediaByCategory(category));
-                }
-
-                for (Map.Entry<Category, Set<Medium>> entry : map.entrySet()) {
-                    System.out.println(entry.getKey().getName());
-                    for (Medium medium : entry.getValue()) {
-                        System.out.println(medium.getName());
+                    Set<Category> categories = categoryManager.findAllCategories();
+                    for (Category category : categories) {
+                        map.put(category, mediumManager.findAllMediaByCategory(category));
                     }
-                }
 
-                SpreadsheetDocument document = odfUtility.transformToDocument(map);
+                    SpreadsheetDocument document = odfUtility.transformToDocument(map);
 
-                try {
-                    odfUtility.writeFile(path, document);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                    try {
+                        odfUtility.writeFile(path, document);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         });
