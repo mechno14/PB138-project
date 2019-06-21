@@ -4,6 +4,7 @@ import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
 import cz.muni.fi.pb138.videolibrary.entity.MediumType;
 import org.odftoolkit.simple.SpreadsheetDocument;
+import org.odftoolkit.simple.table.Cell;
 import org.odftoolkit.simple.table.Row;
 import org.odftoolkit.simple.table.Table;
 
@@ -140,7 +141,10 @@ public class ODFUtilityImpl implements ODFUtility {
         document.removeSheet(0);
         for (Category category : categoryMap.keySet()) {
             Table table = document.appendSheet(category.getName());
-            table.removeRowsByIndex(0, 2);
+            table.appendRow();
+            table.removeRowsByIndex(0, 3);
+            System.out.println(table.getRowCount());
+            table.appendColumns(5);
             writeFirstRow(table.appendRow());
             categoryMap.get(category).forEach(movie -> parseMovie(table.appendRow(), movie));
         }
@@ -149,7 +153,7 @@ public class ODFUtilityImpl implements ODFUtility {
     }
 
 
-    private static void writeFirstRow(Row row) {
+    private void writeFirstRow(Row row) {
         row.getCellByIndex(0).setDisplayText("id");
         row.getCellByIndex(1).setDisplayText("name");
         row.getCellByIndex(2).setDisplayText("mediumType");
