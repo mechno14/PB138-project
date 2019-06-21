@@ -101,16 +101,19 @@ public class XMLDBManagerImpl implements XMLDBManager{
                 "<length>" + Integer.valueOf(medium.getLength()) + "</length>" +
                 "<actors>";
 
-        for (String actor :
-                medium.getActors()) {
-            mediumQuery += "<actor>" + actor + "</actor>";
+        if (medium.getActors() != null) {
+            for (String actor :
+                    medium.getActors()) {
+                mediumQuery += "<actor>" + actor + "</actor>";
+            }
         }
-
         mediumQuery += "</actors><genres>";
 
-        for (Genre genre :
-                medium.getGenres()) {
-            mediumQuery += "<genre>" + genre.toString() + "</genre>";
+        if (medium.getGenres() != null) {
+            for (Genre genre :
+                    medium.getGenres()) {
+                mediumQuery += "<genre>" + genre.toString() + "</genre>";
+            }
         }
 
         mediumQuery += "</genres><releaseYear>" + medium.getReleaseYear()
