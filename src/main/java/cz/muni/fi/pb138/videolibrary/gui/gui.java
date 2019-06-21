@@ -41,6 +41,7 @@ public class gui {
     private JButton importButton;
     private JButton exportButton;
 
+    private XMLDBManager nativeXMLDatabaseManager;
     private CategoryManager categoryManager;
     private MediumManager mediumManager;
     private ODFUtility odfUtility;
@@ -151,14 +152,14 @@ public class gui {
                 fileChooser.setDialogTitle("Import file");
                 fileChooser.setFileFilter(new FileNameExtensionFilter("ODS", "ods"));
                 if (fileChooser.showOpenDialog(importButton) == JFileChooser.APPROVE_OPTION) {
-                }
+                    try {
+                        SpreadsheetDocument document = odfUtility.readFile(fileChooser.getSelectedFile());
+                        Map<Category,Set<Medium>> map = odfUtility.transformToSet(document);
+                        nativeXMLDatabaseManager.importIntoDatabase(map);
 
-                try {
-                    SpreadsheetDocument document = odfUtility.readFile(fileChooser.getSelectedFile());
-                    Map<Category,Set<Medium>> map = odfUtility.transformToSet(document);
-
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
 
             }
@@ -221,7 +222,7 @@ public class gui {
         comboBox1 = new JComboBox();
 
 
-        XMLDBManagerImpl nativeXMLDatabaseManager = new XMLDBManagerImpl();
+        nativeXMLDatabaseManager = new XMLDBManagerImpl();
         categoryManager = new CategoryManagerImpl(nativeXMLDatabaseManager);
         mediumManager = new MediumManagerImpl(nativeXMLDatabaseManager);
         odfUtility = new ODFUtilityImpl();

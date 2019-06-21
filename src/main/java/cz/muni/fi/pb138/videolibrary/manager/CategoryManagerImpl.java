@@ -1,5 +1,6 @@
 package cz.muni.fi.pb138.videolibrary.manager;
 
+import cz.muni.fi.pb138.videolibrary.XMLDBManager;
 import cz.muni.fi.pb138.videolibrary.XMLDBManagerImpl;
 import cz.muni.fi.pb138.videolibrary.entity.Category;
 import cz.muni.fi.pb138.videolibrary.entity.Medium;
@@ -9,9 +10,9 @@ import java.util.Set;
 
 public class CategoryManagerImpl implements CategoryManager {
 
-    private XMLDBManagerImpl databaseManager;
+    private XMLDBManager databaseManager;
 
-    public CategoryManagerImpl(XMLDBManagerImpl databaseManager) {
+    public CategoryManagerImpl(XMLDBManager databaseManager) {
 
         this.databaseManager = databaseManager;
     }
