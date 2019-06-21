@@ -61,7 +61,9 @@ public class gui {
             public void actionPerformed(ActionEvent e) {
                 if (comboBox1.getSelectedItem() != null) {
                     TableModel tableModel = (TableModel) table1.getModel();
-                    tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
+                    if (comboBox1.getSelectedItem().toString().isEmpty()) {
+                        tableModel.setCategory(null);
+                    } else tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
                 }
             }
         });
@@ -85,7 +87,9 @@ public class gui {
                 dialog.setVisible(true);
 
                 TableModel tableModel = (TableModel) table1.getModel();
-                tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
+                if (comboBox1.getSelectedItem().toString().isEmpty()) {
+                    tableModel.setCategory(null);
+                } else tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
             }
         });
 
@@ -102,7 +106,9 @@ public class gui {
                 dialog.pack();
                 dialog.setVisible(true);
 
-                tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
+                if (comboBox1.getSelectedItem().toString().isEmpty()) {
+                    tableModel.setCategory(null);
+                } else tableModel.setCategory(new Category(comboBox1.getSelectedItem().toString()));
             }
         });
         moreInfoButton.addActionListener(new ActionListener() {
@@ -117,6 +123,19 @@ public class gui {
                 MoreInfoDialog dialog = new MoreInfoDialog(tableModel.getMediumAtRow(table1.getSelectedRow()));
                 dialog.pack();
                 dialog.setVisible(true);
+            }
+        });
+        searchMediaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (textFieldFindByName.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Medium name cannot be empty.");
+                    return;
+                }
+
+                TableModel tableModel = (TableModel) table1.getModel();
+                tableModel.setCategory(null, textFieldFindByName.getText());
+
             }
         });
     }
@@ -144,19 +163,23 @@ public class gui {
         mediumManager = new MediumManagerImpl(nativeXMLDatabaseManager);
         setComboBox();
 
+        Category category = null;
+        if (!comboBox1.getSelectedItem().toString().isEmpty()) {
+            category = new Category(comboBox1.getSelectedItem().toString());
+        }
 
         cz.muni.fi.pb138.videolibrary.gui.TableModel tableModel =
                 new cz.muni.fi.pb138.videolibrary.gui.TableModel
-                        (mediumManager, new Category(comboBox1.getSelectedItem().toString()));
+                        (mediumManager, category);
         table1 = new JTable(tableModel);
     }
 
     private void setComboBox() {
         comboBox1.removeAllItems();
+        comboBox1.addItem("");
         Set<Category> categories = categoryManager.findAllCategories();
         for(Category category : categories) {
             comboBox1.addItem(category.getName());
-            //System.out.println(category.getName());
         }
 
         /*

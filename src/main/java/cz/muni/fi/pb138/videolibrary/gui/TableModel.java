@@ -20,12 +20,22 @@ public class TableModel extends AbstractTableModel {
     public TableModel(MediumManager mediumManager, Category category) {
         this.mediumManager = mediumManager;
         this.category = category;
-        media = new ArrayList<>(mediumManager.findAllMediaByCategory(category));
+        if (category == null) {
+            media = new ArrayList<>();
+        } else media = new ArrayList<>(mediumManager.findAllMediaByCategory(category));
     }
 
     public void setCategory(Category category) {
         this.category = category;
-        media = new ArrayList<>(mediumManager.findAllMediaByCategory(category));
+        if (category == null) {
+            media = new ArrayList<>();
+        } else media = new ArrayList<>(mediumManager.findAllMediaByCategory(category));
+        fireTableDataChanged();
+    }
+
+    public void setCategory(Category category, String name) {
+        this.category = category;
+        media = new ArrayList<>(mediumManager.findMediumByName(name));
         fireTableDataChanged();
     }
 
