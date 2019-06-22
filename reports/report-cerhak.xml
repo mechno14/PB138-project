@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+	<info>
+		<title>PB138 projekt - Finálna správa</title>
+        <author>
+            <personname>Radoslav Čerhák</personname>
+            <email>456228@mail.muni.cz</email>
+        </author>
+    </info>
+
+    <sect1 xml:id="design">
+    	<title>Návrh aplikácie</title>
+    	<para>
+      Mojou prvou úlohou bolo vytvorenie tried Medium a Category reprezentujúcich databázové entity, ktorých atribúty sme konzultovali spolu s týmom. Ďalej som vytvoril
+      a implementoval rozhrania CategoryManager a MediumManager pre vykonávanie CRUD operácií s entitatami. Tieto triedy volajú metódy rozhrania XMLDBManager reprezentujúceho
+      vrstvu perzistencie dát.
+    	</para>
+    </sect1>
+    <sect1 xml:id="deserialization">
+    	<title>Deserializácia</title>
+    	<para>
+      Mojou ďalšou úlohou bola deserializácia XML na objekty typu Medium a Catagory. Na tento účel som zvolil knižnicu <ulink url="https://javaee.github.io/jaxb-v2/">Java Architecture for XML Binding (JAXB)</ulink>, ktorá pomocou
+      anotácií mapuje XML atribúty a elementy na atribúty Java objektov.
+    	</para>
+    </sect1>
+    <sect1 xml:id="gui-implementation">
+      <title>Prepojenie GUI s backendom</title>
+      <para>
+      Mojou poslednou úlohou bolo spolu s Natáliou prepojiť GUI s backendom. V mojom prípade to bola implentácia tlačítok Add Category, Search media, Delete medium a hlavnej tabuľky
+      zobrazujúcej média v danej kategórii.
+      </para>
+    </sect1>
+</article>
