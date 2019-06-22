@@ -5,5 +5,5 @@ test-output
 .classpath
 *.iml
 *~
-target
+target/*
 !target/DomacaVideoteka.jar
