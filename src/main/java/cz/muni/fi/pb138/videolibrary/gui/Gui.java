@@ -8,13 +8,19 @@ import cz.muni.fi.pb138.videolibrary.manager.*;
 import org.apache.commons.io.FilenameUtils;
 import org.odftoolkit.simple.SpreadsheetDocument;
 
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +41,8 @@ public class Gui {
     private JTextField textFieldFindByName;
     private JButton importButton;
     private JButton exportButton;
+    private JScrollPane scrollPane1;
+    private JButton title;
 
     private XMLDBManager nativeXMLDatabaseManager;
     private CategoryManager categoryManager;
@@ -244,6 +252,42 @@ public class Gui {
         table1.getColumnModel().getColumn(1).setPreferredWidth(200);
         table1.getColumnModel().getColumn(2).setPreferredWidth(60);
         table1.getColumnModel().getColumn(3).setPreferredWidth(60);
+
+        try {
+            //System.out.println("Path : " + new File("../PB138-project/src/main/resources/1uvod.jpg").getCanonicalPath());
+            final Image backgroundImage = ImageIO.read
+                    (new FileInputStream("../PB138-project/src/main/resources/1uvod.png"));
+            Image newImageBackround = backgroundImage.getScaledInstance(1000, 700, Image.SCALE_DEFAULT);
+            panel = new JPanel(new BorderLayout()) {
+                @Override public void paintComponent(Graphics g) {
+                    g.drawImage(newImageBackround,0, 0, null);
+                }
+            };
+
+            BufferedImage imgExport = ImageIO.read(new File("../PB138-project/src/main/resources/EXPORT.png"));
+            Image newExp = imgExport.getScaledInstance(260, 30, Image.SCALE_DEFAULT);
+            exportButton = new JButton(new ImageIcon(newExp));
+            exportButton.setContentAreaFilled(false);
+
+            BufferedImage imgImport = ImageIO.read(new File("../PB138-project/src/main/resources/IMPORT.png"));
+            Image newImp = imgImport.getScaledInstance(260, 30, Image.SCALE_DEFAULT);
+            importButton = new JButton(new ImageIcon(newImp));
+            importButton.setContentAreaFilled(false);
+
+            BufferedImage imgTitle = ImageIO.read(new File("../PB138-project/src/main/resources/TITLE.png"));
+            Image newTitle = imgTitle.getScaledInstance(300, 75, Image.SCALE_DEFAULT);
+            title = new JButton(new ImageIcon(newTitle));
+            title.setContentAreaFilled(false);
+            title.setBorder(BorderFactory.createEmptyBorder());
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+
     }
 
     private void setComboBox() {
