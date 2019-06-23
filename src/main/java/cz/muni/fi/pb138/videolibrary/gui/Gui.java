@@ -257,7 +257,7 @@ public class Gui {
             //System.out.println("Path : " + new File("../PB138-project/src/main/resources/1uvod.jpg").getCanonicalPath());
             final Image backgroundImage = ImageIO.read
                     (new FileInputStream("../PB138-project/src/main/resources/1uvod.png"));
-            Image newImageBackround = backgroundImage.getScaledInstance(1000, 700, Image.SCALE_DEFAULT);
+            Image newImageBackround = backgroundImage.getScaledInstance(1000, 700, Image.SCALE_SMOOTH);
             panel = new JPanel(new BorderLayout()) {
                 @Override public void paintComponent(Graphics g) {
                     g.drawImage(newImageBackround,0, 0, null);
@@ -265,17 +265,17 @@ public class Gui {
             };
 
             BufferedImage imgExport = ImageIO.read(new File("../PB138-project/src/main/resources/EXPORT.png"));
-            Image newExp = imgExport.getScaledInstance(260, 30, Image.SCALE_DEFAULT);
+            Image newExp = imgExport.getScaledInstance(260, 30, Image.SCALE_SMOOTH);
             exportButton = new JButton(new ImageIcon(newExp));
             exportButton.setContentAreaFilled(false);
 
             BufferedImage imgImport = ImageIO.read(new File("../PB138-project/src/main/resources/IMPORT.png"));
-            Image newImp = imgImport.getScaledInstance(260, 30, Image.SCALE_DEFAULT);
+            Image newImp = imgImport.getScaledInstance(260, 30, Image.SCALE_SMOOTH);
             importButton = new JButton(new ImageIcon(newImp));
             importButton.setContentAreaFilled(false);
 
             BufferedImage imgTitle = ImageIO.read(new File("../PB138-project/src/main/resources/TITLE.png"));
-            Image newTitle = imgTitle.getScaledInstance(300, 75, Image.SCALE_DEFAULT);
+            Image newTitle = imgTitle.getScaledInstance(300, 75, Image.SCALE_SMOOTH);
             title = new JButton(new ImageIcon(newTitle));
             title.setContentAreaFilled(false);
             title.setBorder(BorderFactory.createEmptyBorder());
