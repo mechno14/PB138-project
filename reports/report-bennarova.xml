@@ -11,17 +11,18 @@
     <sect1 xml:id="XML-database">
     	<title>XML databáza</title>
     	<para>
-      Mojou prvou úlohou bolo spraviť XML databázu. Pre databázu som najprv spravila XML schému(súbor scheme.xsd), ktorej elementy a atribúty som konzultovala s mojím týmom a
-      následne na základe tejto XML schémy som vytvorila jednoduchú XML databázu reprezentujúcu domácu videotéku(súbor database.xml). Táto databáza slúžila aj na testovanie implementácie.
+      V našej aplikácii používame <ulink url="http://exist-db.org/exist/apps/homepage/index.html">eXist-db</ulink>.
+      Mojou prvou úlohou bolo navrhnúť ako má vyzerať XML súbor pre túto databázu. Pre databázu som ako prvý krok spravila XML schému(súbor <ulink url="https://github.com/mechno14/PB138-project/blob/master/scheme.xsd">scheme.xsd</ulink>), ktorej elementy a atribúty som konzultovala s mojím teamom a
+      následne na základe tejto XML schémy som vytvorila jednoduchú XML databázu reprezentujúcu domácu videotéku(súbor <ulink url="https://github.com/mechno14/PB138-project/blob/master/database.xml">database.xml</ulink>). Táto databáza slúžila aj na testovanie implementácie. 
     	</para>
     </sect1>
     <sect1 xml:id="ODFUtility">
     	<title>ODFUtility implementácia/title>
     	<para>
             Moja ďalšia úloha bola implementovať triedu pre prácu s ODF formátom. Túto funkcionalitu som implementovala v triede ODFUtility.class, ktorá obsahuje metódy pre čítanie z ODF súboru,
-            zápis do ODF súboru a metódy na transformovanie z a do dokumentu. Taktiež som vytvorila ukážkový súbor importFile.ods, v ktorom jednotlivé záložky reprezentujú kategórie a tabulky v nich 
+            zápis do ODF súboru a metódy na transformovanie z a do dokumentu. Taktiež som vytvorila ukážkový súbor <ulink url="https://github.com/mechno14/PB138-project/blob/master/importFile.ods">importFile.ods</ulink>, v ktorom jednotlivé záložky reprezentujú kategórie a tabulky v nich 
             jednotlivé médiá vo videotéke. 
-            //TODO Denis ako help so spojenim tried s impl
+	    Radoslav tieto triedy následne prepojil GUI.
     	</para>
     </sect1>
     <sect1 xml:id="tests">
