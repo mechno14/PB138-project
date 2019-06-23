@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+	<info>
+		<title>PB138 projekt - Finálna správa</title>
+        <author>
+            <personname>Natália Bebjaková</personname>
+            <email>456319@mail.muni.cz</email>
+        </author>
+    </info>
+
+    <sect1 xml:id="NávrhUI">
+    	<title>Návrh UI</title>
+    	<para>
+            Mojou úlohou v tomto projekte bol frontend. Na začiatku som vytvorila predbežný návrh User Interface. Návrh som sa snažila vytvoriť čo najprívetivejší pre užívateľa. Zahrnula som v ňom aj predbežnú funkcionalitu, ktorá plnila podmienky zadania. 
+    	</para>
+    </sect1>
+    <sect1 xml:id="GUI">
+    	<title>GUI</title>
+    	<para>
+            Konečný grafický návrh rozhrania sme sa po dohode s tímom rozhodli riešiť pomocou knižnice JavaFX. Práca s ňou je v mnohých ohľadoch jednoduchšia oproti starším alternatívam. 
+            Avšak, po dlhom a neúspešnom zápase pri pokuse prepojiť jednotlivé .fxml súbory s naším, už existujúcim kódom, sme boli nútení prejsť na nástroj Swing. 
+        </para>
+        <para>
+            Tento nástroj okrem známych komponentov, ako sú tlačidlá, poskytuje niekoľko pokročilých komponentov, ako je napríklad panel s kartami alebo tabuľky, ktoré sme využili v našej aplikácii. Celá aplikácia pozostáva z hlavného okna, na ktorom sú umiestnené jednotlivé tlačidlá poskytujúce želanú funkcionalitu. Po kliknutí na niektoré z nich je užívateľovi poskytnuté dialogové okno. 
+        </para>
+    </sect1>
+    <sect1 xml:id="finalizácia">
+      <title>Finalizácia</title>
+      <para>
+            Nasledovalo prepojenie jednolivých komponentov s backendom, ako napríklad: add medium, more info alebo relocate. Na tejto úlohe sme spolupracovali spolu s Radoslavom. 
+      </para>
+      <para>
+            V poslednej fáze som sa snažila užívateľsky spríjemniť vzľad aplikácie preusporiadaním jednotlivých komponentov, pridaním obrázkových médií atď. 
+      </para>
+    </sect1>
+</article>
+
